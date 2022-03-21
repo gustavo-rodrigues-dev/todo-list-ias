@@ -26,7 +26,7 @@ describe('CdkBaseStack.constructor', () => {
             Name: "bucketName"
           }
         })
-
+        
         template.hasResource('AWS::S3::Bucket', {
             Type: 'AWS::S3::Bucket',
             Properties: {
