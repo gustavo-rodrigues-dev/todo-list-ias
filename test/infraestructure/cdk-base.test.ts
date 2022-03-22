@@ -51,4 +51,8 @@ describe('CdkBaseStack.constructor', () => {
             DeletionPolicy: 'Retain'
           });
     });
+
+    it('Should stack contains Lambda Api', () => {     
+      template.hasResource('AWS::Lambda::Function', {})
+    })
 })

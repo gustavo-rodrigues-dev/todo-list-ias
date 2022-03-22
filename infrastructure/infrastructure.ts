@@ -1,5 +1,6 @@
 import { Stack, StackProps, Tags, CfnOutput} from 'aws-cdk-lib';
 import { Construct } from 'constructs';
+import { ApiFunctionStack } from './api-lambda';
 import { S3BucketStack } from './s3';
 // import * as sqs from 'aws-cdk-lib/aws-sqs';
 
@@ -9,6 +10,7 @@ export class CdkBaseStack extends Stack {
     Tags.of(scope).add('project', 'to-do-stack');
 
     const bucket = (new S3BucketStack(this)).bucket;
+    const apiLambda = (new ApiFunctionStack(this)).apiFunction;
 
     new CfnOutput(this, "ToDoStackCreate", {
       value: id,
