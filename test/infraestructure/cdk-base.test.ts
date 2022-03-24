@@ -54,4 +54,8 @@ describe('CdkBaseStack.constructor', () => {
     it('Should stack contains Lambda Api', () => {     
       template.hasResource('AWS::Lambda::Function', {})
     })
+    
+    it('Should stack contains ApiGateway for Lambda Api', () => {     
+      template.hasResource('AWS::ApiGateway::RestApi', {})
+    })
 })
