@@ -6,7 +6,6 @@ import path from "path";
 export class ApiFunctionStack {
     readonly apiFunction: NodejsFunction;
     constructor(stack: Stack){
-        console.log(path.join(__dirname, '..', 'api', 'index.ts'));
         this.apiFunction = new NodejsFunction(stack, 'ApiLambda', {
             runtime: Runtime.NODEJS_14_X,
             entry: path.join(__dirname, '..', 'api', 'src', 'index.ts'),

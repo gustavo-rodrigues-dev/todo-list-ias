@@ -18,7 +18,7 @@ describe('CdkBaseStack.constructor', () => {
         const s3Resources = template.findResources('AWS::S3::Bucket');
         const s3Keys = Object.keys(s3Resources);
         
-        template.hasOutput('todobucketTodoBucketNameExport79BB9714', {
+        template.hasOutput('ToDoBucketStackTodoBucketNameExport81992C41', {
           Value: {
             Ref: s3Keys[0]
           },
@@ -39,7 +39,6 @@ describe('CdkBaseStack.constructor', () => {
                   }
                 ]
               },
-              BucketName: 'to-do-bucket',
               Tags: [
                 {
                   Key: 'project',
