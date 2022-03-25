@@ -1,5 +1,5 @@
-import { Stack, CfnOutput } from "aws-cdk-lib";
-import { Bucket, BucketEncryption } from "aws-cdk-lib/aws-s3";
+import { Stack, CfnOutput } from 'aws-cdk-lib';
+import { Bucket, BucketEncryption } from 'aws-cdk-lib/aws-s3';
 
 export class S3BucketStack {
     readonly bucket: Bucket;
@@ -8,9 +8,9 @@ export class S3BucketStack {
             encryption: BucketEncryption.S3_MANAGED,
         });
 
-       new CfnOutput(this.bucket, "TodoBucketNameExport", {
+       new CfnOutput(this.bucket, 'TodoBucketNameExport', {
           value: this.bucket.bucketName,
-          exportName: "bucketName"
+          exportName: 'bucketName',
         });
     }
 }

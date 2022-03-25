@@ -1,7 +1,6 @@
 import * as cdk from 'aws-cdk-lib';
 import { Template } from 'aws-cdk-lib/assertions';
-import { BucketEncryption } from 'aws-cdk-lib/aws-s3';
- import * as CdkBaseStack from '../../infrastructure/infrastructure';
+import * as CdkBaseStack from '../../infrastructure/infrastructure';
 // example test. To run these tests, uncomment this file along with the
 // example resource in lib/cdk-base-stack.ts
 
@@ -11,22 +10,22 @@ describe('CdkBaseStack.constructor', () => {
     const template = Template.fromStack(stack);
 
     it('Should create a stack with tag project: to-do-stack', () => {
-        expect(stack.tags.tagValues()).toEqual({ project: 'to-do-stack' })
+        expect(stack.tags.tagValues()).toEqual({ project: 'to-do-stack' });
     });
 
     it('Should stack contains S3 bucket', () => {
         const s3Resources = template.findResources('AWS::S3::Bucket');
         const s3Keys = Object.keys(s3Resources);
-        
+
         template.hasOutput('ToDoBucketStackTodoBucketNameExport81992C41', {
           Value: {
-            Ref: s3Keys[0]
+            Ref: s3Keys[0],
           },
           Export: {
-            Name: "bucketName"
-          }
-        })
-        
+            Name: 'bucketName',
+          },
+        });
+
         template.hasResource('AWS::S3::Bucket', {
             Type: 'AWS::S3::Bucket',
             Properties: {
@@ -34,28 +33,28 @@ describe('CdkBaseStack.constructor', () => {
                 ServerSideEncryptionConfiguration: [
                   {
                     ServerSideEncryptionByDefault: {
-                      SSEAlgorithm: 'AES256'
-                    }
-                  }
-                ]
+                      SSEAlgorithm: 'AES256',
+                    },
+                  },
+                ],
               },
               Tags: [
                 {
                   Key: 'project',
-                  Value: 'to-do-stack'
-                }
-              ]
+                  Value: 'to-do-stack',
+                },
+              ],
             },
             UpdateReplacePolicy: 'Retain',
-            DeletionPolicy: 'Retain'
+            DeletionPolicy: 'Retain',
           });
     });
 
-    it('Should stack contains Lambda Api', () => {     
-      template.hasResource('AWS::Lambda::Function', {})
-    })
-    
-    it('Should stack contains ApiGateway for Lambda Api', () => {     
-      template.hasResource('AWS::ApiGateway::RestApi', {})
-    })
-})
+    it('Should stack contains Lambda Api', () => {
+      template.hasResource('AWS::Lambda::Function', {});
+    });
+
+    it('Should stack contains ApiGateway for Lambda Api', () => {
+      template.hasResource('AWS::ApiGateway::RestApi', {});
+    });
+});

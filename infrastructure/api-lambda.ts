@@ -1,8 +1,8 @@
-import { Stack, CfnOutput } from "aws-cdk-lib";
-import { Runtime } from "aws-cdk-lib/aws-lambda";
-import { NodejsFunction } from "aws-cdk-lib/aws-lambda-nodejs";
-import { LambdaRestApi } from "aws-cdk-lib/aws-apigateway";
-import path from "path";
+import { Stack, CfnOutput } from 'aws-cdk-lib';
+import { Runtime } from 'aws-cdk-lib/aws-lambda';
+import { NodejsFunction } from 'aws-cdk-lib/aws-lambda-nodejs';
+import { LambdaRestApi } from 'aws-cdk-lib/aws-apigateway';
+import path from 'path';
 
 export class ApiFunctionStack {
     readonly apiFunction: NodejsFunction;
@@ -11,24 +11,24 @@ export class ApiFunctionStack {
         this.apiFunction = new NodejsFunction(stack, 'ApiLambda', {
             runtime: Runtime.NODEJS_14_X,
             entry: path.join(__dirname, '..', 'api', 'src', 'index.ts'),
-            handler: 'handleHello', 
-            depsLockFilePath: path.join(__dirname, '..', 'api', 'package-lock.json'),  
+            handler: 'handleHello',
+            depsLockFilePath: path.join(__dirname, '..', 'api', 'package-lock.json'),
 
         });
 
-       new CfnOutput(this.apiFunction, "ApiLambdaExport", {
+       new CfnOutput(this.apiFunction, 'ApiLambdaExport', {
           value: this.apiFunction.functionName,
-          exportName: "FunctionName"
+          exportName: 'FunctionName',
         });
 
         this.apiGateway = new LambdaRestApi(stack, 'ToDoApi', {
             handler: this.apiFunction,
-            proxy: true
+            proxy: true,
         });
 
-        new CfnOutput(this.apiGateway, "ApiGatewayExport", {
+        new CfnOutput(this.apiGateway, 'ApiGatewayExport', {
             value: this.apiGateway.restApiName,
-            exportName: "RestApiName"
+            exportName: 'RestApiName',
         });
     }
 }

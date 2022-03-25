@@ -9,12 +9,12 @@ export class CdkBaseStack extends Stack {
     super(scope, id, props);
     Tags.of(scope).add('project', 'to-do-stack');
 
-    const bucket = (new S3BucketStack(this)).bucket;
-    const apiLambda = (new ApiFunctionStack(this)).apiFunction;
+    new S3BucketStack(this);
+    new ApiFunctionStack(this);
 
-    new CfnOutput(this, "ToDoStackCreate", {
+    new CfnOutput(this, 'ToDoStackCreate', {
       value: id,
-      exportName: "StackId"
+      exportName: 'StackId',
     });
 
     // The code that defines your stack goes here
