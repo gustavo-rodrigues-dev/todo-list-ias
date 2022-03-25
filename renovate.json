@@ -1,5 +1,18 @@
 {
   "extends": [
     "config:base"
-  ]
+  ],
+  "labels": ["dependencies"],
+  "packageRules": [
+    {
+      "matchDepTypes": ["devDependencies"],
+      "automerge": true
+    }
+  ],
+  "commitMessagePrefix": "enabled",
+  "semanticCommitType": "chore",
+  "vulnerabilityAlerts": {
+    "labels": ["security"],
+    "automerge": true
+  }
 }
