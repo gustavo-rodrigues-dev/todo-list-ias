@@ -19,7 +19,10 @@
     "inlineSourceMap": true,
     "inlineSources": true,
     "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "allowSyntheticDefaultImports": true,
     "strictPropertyInitialization": false,
+    "skipLibCheck": true,
     "esModuleInterop": true,
     "typeRoots": [
       "./node_modules/@types"

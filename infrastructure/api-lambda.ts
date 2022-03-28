@@ -1,20 +1,17 @@
 import { CfnOutput } from 'aws-cdk-lib';
-import { Runtime } from 'aws-cdk-lib/aws-lambda';
-import { NodejsFunction } from 'aws-cdk-lib/aws-lambda-nodejs';
+import { DockerImageFunction, DockerImageCode } from 'aws-cdk-lib/aws-lambda';
 import { LambdaRestApi } from 'aws-cdk-lib/aws-apigateway';
 import path from 'path';
 import { StackResource } from './stack-resource';
 import { ToDoApiGateway, ToDoLambdaApi } from './resources';
 
 export class ApiFunctionStack {
-  readonly apiFunction: NodejsFunction;
-  readonly apiGateway: LambdaRestApi;
   constructor(stack: StackResource) {
-    const apiFunction = new NodejsFunction(stack, 'ApiLambda', {
-      runtime: Runtime.NODEJS_14_X,
-      entry: path.join(__dirname, '..', 'api', 'src', 'index.ts'),
-      handler: 'handleHello',
-      depsLockFilePath: path.join(__dirname, '..', 'api', 'package-lock.json'),
+    const apiFunction = new DockerImageFunction(stack, 'ApiLambda', {
+      code: DockerImageCode.fromImageAsset(path.join(__dirname, '..', 'api'), {
+        cmd: ['index.handleHello'],
+        entrypoint: ['/lambda-entrypoint.sh'],
+      }),
     });
 
     const apiGateway = new LambdaRestApi(stack, 'ToDoApi', {
