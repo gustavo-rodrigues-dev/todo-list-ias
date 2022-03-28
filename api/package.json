@@ -29,5 +29,8 @@
     "@nestjs/core": "^8.4.3",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.5.5"
+  },
+  "overrides": {
+    "minimist": "1.2.6"
   }
 }
