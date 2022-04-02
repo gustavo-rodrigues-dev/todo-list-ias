@@ -21,7 +21,7 @@
     "@commitlint/config-conventional": "16.2.1",
     "@types/jest": "27.4.1",
     "@types/node": "16.11.26",
-    "aws-cdk": "2.17.0",
+    "aws-cdk": "2.19.0",
     "husky": "7.0.4",
     "jest": "27.5.1",
     "ts-jest": "27.1.4",
@@ -31,7 +31,7 @@
   "dependencies": {
     "@typescript-eslint/eslint-plugin": "5.17.0",
     "@typescript-eslint/parser": "5.17.0",
-    "aws-cdk-lib": "2.17.0",
+    "aws-cdk-lib": "2.19.0",
     "constructs": "10.0.103",
     "eslint": "8.12.0",
     "eslint-config-prettier": "8.5.0",
