@@ -2,7 +2,7 @@ import { CfnOutput } from 'aws-cdk-lib';
 import { DockerImageFunction, DockerImageCode } from 'aws-cdk-lib/aws-lambda';
 import { LambdaRestApi } from 'aws-cdk-lib/aws-apigateway';
 import path from 'path';
-import { StackResource } from './stack-resource';
+import { StackResource } from '../stack-resource';
 import { ToDoApiGateway, ToDoBucket, ToDoLambdaApi } from './resources';
 import { Effect, PolicyStatement } from 'aws-cdk-lib/aws-iam';
 import { Bucket } from 'aws-cdk-lib/aws-s3';
@@ -13,10 +13,13 @@ export class ApiFunctionStack {
       ToDoBucket,
     ) as Bucket;
     const apiFunction = new DockerImageFunction(stack, 'ApiLambda', {
-      code: DockerImageCode.fromImageAsset(path.join(__dirname, '..', 'api'), {
-        cmd: ['index.handleHello'],
-        entrypoint: ['/lambda-entrypoint.sh'],
-      }),
+      code: DockerImageCode.fromImageAsset(
+        path.join(__dirname, '..', '..', 'api'),
+        {
+          cmd: ['index.handleHello'],
+          entrypoint: ['/lambda-entrypoint.sh'],
+        },
+      ),
     });
 
     if (!bucket) {

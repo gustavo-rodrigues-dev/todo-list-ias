@@ -1,7 +1,7 @@
 import { CfnOutput } from 'aws-cdk-lib';
 import { Bucket, BucketEncryption } from 'aws-cdk-lib/aws-s3';
 import { ToDoBucket } from './resources';
-import { StackResource } from './stack-resource';
+import { StackResource } from '../stack-resource';
 
 export class S3BucketStack {
   constructor(stack: StackResource) {

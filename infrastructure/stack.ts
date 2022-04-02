@@ -1,12 +1,16 @@
 import { StackResource } from './stack-resource';
-import { StackProps, Tags, CfnOutput, Resource, Stack } from 'aws-cdk-lib';
+import {
+  StackProps,
+  Tags,
+  CfnOutput,
+  Resource,
+  Stack as CDKStack,
+} from 'aws-cdk-lib';
 import { Construct } from 'constructs';
-import { ApiFunctionStack } from './api-lambda';
-import { S3BucketStack } from './s3';
-import { ToDoStack } from './resources';
+import { S3BucketStack, ToDoStack, ApiFunctionStack } from './resource';
 // import * as sqs from 'aws-cdk-lib/aws-sqs';
 
-export class CdkBaseStack extends Stack implements StackResource {
+export class Stack extends CDKStack implements StackResource {
   public resources: Map<string | Symbol, Resource> = new Map();
   public outPuts: Map<string | Symbol, [CfnOutput]> = new Map();
   constructor(scope: Construct, id: string, props?: StackProps) {
