@@ -2,7 +2,7 @@
   "name": "todo-ias-ts",
   "version": "0.1.0",
   "bin": {
-    "ias": "./dist/infrastructure/cdk-bin.js"
+    "ias": "./dist/infrastructure/bin.js"
   },
   "scripts": {
     "build": "tsc",
@@ -11,10 +11,10 @@
     "cdk": "cdk",
     "test:debug": "node --inspect-brk ./node_modules/jest/bin/jest.js --runInBand --coverage=false",
     "lint:commit:format": "npx commitlint --from HEAD~1 --to HEAD --verbose",
-    "lint:code:format": "prettier --check '{infrastructure, test}/**/*.ts'",
-    "lint:code:format:fix": "prettier --write '{infrastructure, test}/**/*.ts'",
-    "lint:code:style": "eslint '**/*.ts'",
-    "lint:code:style:fix": "eslint '**/*.ts' --fix"
+    "lint:code:format": "prettier .",
+    "lint:code:format:fix": "prettier --write .",
+    "lint:code:style": "eslint .",
+    "lint:code:style:fix": "eslint . --fix"
   },
   "devDependencies": {
     "@commitlint/cli": "16.2.3",
