@@ -1,0 +1,26 @@
+version: 2
+updates:
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    commit-message:
+      prefix: "chore:"
+      include: "scope"
+    labels:
+      - "npm"
+      - "dependencies"
+      - "security"
+      - "infrastructure"
+  - package-ecosystem: "npm"
+    directory: "/api"
+    schedule:
+      interval: "daily"
+    commit-message:
+      prefix: "chore:"
+      include: "scope"
+    labels:
+      - "npm"
+      - "dependencies"
+      - "security"
+      - "api"
