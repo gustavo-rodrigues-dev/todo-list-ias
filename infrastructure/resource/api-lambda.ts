@@ -20,6 +20,9 @@ export class ApiFunctionStack {
           entrypoint: ['/lambda-entrypoint.sh'],
         },
       ),
+      environment: {
+        BUCKET_NAME: bucket.bucketName,
+      },
     });
 
     if (!bucket) {

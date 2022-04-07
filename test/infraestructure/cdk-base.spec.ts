@@ -53,6 +53,23 @@ describe('CdkBaseStack.constructor', () => {
   });
 
   it('Should Lambda Api can ListBucket, GetObject and PutObject on Bucket', () => {
+    const bucketName = Object.keys(
+      template.findResources('AWS::S3::Bucket'),
+    )[0];
+
+    template.hasResourceProperties(
+      'AWS::Lambda::Function',
+      Match.objectLike({
+        Environment: {
+          Variables: {
+            BUCKET_NAME: {
+              Ref: bucketName,
+            },
+          },
+        },
+      }),
+    );
+
     template.hasResourceProperties(
       'AWS::IAM::Policy',
       Match.objectEquals({
