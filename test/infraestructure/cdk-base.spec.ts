@@ -48,8 +48,12 @@ describe('CdkBaseStack.constructor', () => {
     });
   });
 
-  it('Should stack contains Lambda Api', () => {
+  it('Should stack contains DynamoDb Table', () => {
     template.hasResource('AWS::Lambda::Function', {});
+  });
+
+  it('Should stack contains Lambda Api', () => {
+    template.hasResource('AWS::DynamoDB::Table', {});
   });
 
   it('Should Lambda Api can ListBucket, GetObject and PutObject on Bucket', () => {
@@ -61,11 +65,11 @@ describe('CdkBaseStack.constructor', () => {
       'AWS::Lambda::Function',
       Match.objectLike({
         Environment: {
-          Variables: {
+          Variables: Match.objectLike({
             BUCKET_NAME: {
               Ref: bucketName,
             },
-          },
+          }),
         },
       }),
     );
@@ -74,7 +78,7 @@ describe('CdkBaseStack.constructor', () => {
       'AWS::IAM::Policy',
       Match.objectEquals({
         PolicyDocument: {
-          Statement: [
+          Statement: Match.arrayWith([
             {
               Action: 'S3:ListBucket',
               Effect: 'Allow',
@@ -103,7 +107,62 @@ describe('CdkBaseStack.constructor', () => {
                 ],
               },
             },
-          ],
+          ]),
+          Version: '2012-10-17',
+        },
+        PolicyName: Match.stringLikeRegexp('ApiLambda\\S+'),
+        Roles: [
+          {
+            Ref: Match.stringLikeRegexp('ApiLambda\\S+'),
+          },
+        ],
+      }),
+    );
+  });
+
+  it('Should Lambda Api can access DynamoDb Table', () => {
+    const tableName = Object.keys(
+      template.findResources('AWS::DynamoDB::Table'),
+    )[0];
+
+    template.hasResourceProperties(
+      'AWS::Lambda::Function',
+      Match.objectLike({
+        Environment: {
+          Variables: Match.objectLike({
+            TABLE_NAME: {
+              Ref: tableName,
+            },
+          }),
+        },
+      }),
+    );
+
+    template.hasResourceProperties(
+      'AWS::IAM::Policy',
+      Match.objectEquals({
+        PolicyDocument: {
+          Statement: Match.arrayWith([
+            {
+              Action: [
+                'dynamodb:BatchGet*',
+                'dynamodb:DescribeStream',
+                'dynamodb:DescribeTable',
+                'dynamodb:Get*',
+                'dynamodb:Query',
+                'dynamodb:Scan',
+                'dynamodb:BatchWrite*',
+                'dynamodb:CreateTable',
+                'dynamodb:Delete*',
+                'dynamodb:Update*',
+                'dynamodb:PutItem',
+              ],
+              Effect: 'Allow',
+              Resource: {
+                'Fn::GetAtt': [Match.stringLikeRegexp('TodoTable\\S+'), 'Arn'],
+              },
+            },
+          ]),
           Version: '2012-10-17',
         },
         PolicyName: Match.stringLikeRegexp('ApiLambda\\S+'),

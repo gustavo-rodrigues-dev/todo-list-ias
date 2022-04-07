@@ -8,6 +8,7 @@ import {
 } from 'aws-cdk-lib';
 import { Construct } from 'constructs';
 import { S3BucketStack, ToDoStack, ApiFunctionStack } from './resource';
+import { DynamoDbStack } from './resource/dynamo-db';
 // import * as sqs from 'aws-cdk-lib/aws-sqs';
 
 export class Stack extends CDKStack implements StackResource {
@@ -19,6 +20,7 @@ export class Stack extends CDKStack implements StackResource {
     Tags.of(scope).add('project', 'to-do-stack');
 
     new S3BucketStack(self);
+    new DynamoDbStack(self);
     new ApiFunctionStack(self);
     this.outPuts.set(ToDoStack, [
       new CfnOutput(self, 'ToDoStackCreate', {

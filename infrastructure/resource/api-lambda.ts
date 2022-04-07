@@ -3,15 +3,34 @@ import { DockerImageFunction, DockerImageCode } from 'aws-cdk-lib/aws-lambda';
 import { LambdaRestApi } from 'aws-cdk-lib/aws-apigateway';
 import path from 'path';
 import { StackResource } from '../stack-resource';
-import { ToDoApiGateway, ToDoBucket, ToDoLambdaApi } from './resources';
+import {
+  ToDoApiGateway,
+  ToDoBucket,
+  ToDoDynamoDb,
+  ToDoLambdaApi,
+} from './resources';
 import { Effect, PolicyStatement } from 'aws-cdk-lib/aws-iam';
 import { Bucket } from 'aws-cdk-lib/aws-s3';
+import { Table } from 'aws-cdk-lib/aws-dynamodb';
 
 export class ApiFunctionStack {
   constructor(stack: StackResource) {
     const bucket: Bucket | undefined = stack.resources.get(
       ToDoBucket,
     ) as Bucket;
+
+    if (!bucket) {
+      throw new Error(`Bucket ${ToDoBucket.toString()} is no available`);
+    }
+
+    const dynamodb: Table | undefined = stack.resources.get(
+      ToDoDynamoDb,
+    ) as Table;
+
+    if (!dynamodb) {
+      throw new Error(`Table ${ToDoDynamoDb.toString()} is no available`);
+    }
+
     const apiFunction = new DockerImageFunction(stack, 'ApiLambda', {
       code: DockerImageCode.fromImageAsset(
         path.join(__dirname, '..', '..', 'api'),
@@ -22,12 +41,9 @@ export class ApiFunctionStack {
       ),
       environment: {
         BUCKET_NAME: bucket.bucketName,
+        TABLE_NAME: dynamodb.tableName,
       },
     });
-
-    if (!bucket) {
-      throw new Error(`Bucket ${ToDoBucket.toString()} is no available`);
-    }
 
     const bucketContainerPermissions = new PolicyStatement({
       effect: Effect.ALLOW,
@@ -41,8 +57,27 @@ export class ApiFunctionStack {
       actions: ['S3:GetObject', 'S3:PutObject'],
     });
 
+    const dynamoDbTablePermissions = new PolicyStatement({
+      effect: Effect.ALLOW,
+      resources: [`${dynamodb.tableArn}`],
+      actions: [
+        'dynamodb:BatchGet*',
+        'dynamodb:DescribeStream',
+        'dynamodb:DescribeTable',
+        'dynamodb:Get*',
+        'dynamodb:Query',
+        'dynamodb:Scan',
+        'dynamodb:BatchWrite*',
+        'dynamodb:CreateTable',
+        'dynamodb:Delete*',
+        'dynamodb:Update*',
+        'dynamodb:PutItem',
+      ],
+    });
+
     apiFunction.addToRolePolicy(bucketContainerPermissions);
     apiFunction.addToRolePolicy(bucketPermissions);
+    apiFunction.addToRolePolicy(dynamoDbTablePermissions);
 
     const apiGateway = new LambdaRestApi(stack, 'ToDoApi', {
       handler: apiFunction,

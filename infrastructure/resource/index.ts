@@ -4,5 +4,6 @@ export {
   ToDoBucket,
   ToDoLambdaApi,
   ToDoStack,
+  ToDoDynamoDb,
 } from './resources';
 export { S3BucketStack } from './s3';
