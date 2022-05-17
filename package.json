@@ -21,7 +21,7 @@
     "@commitlint/config-angular": "17.0.0",
     "@commitlint/config-conventional": "17.0.0",
     "@types/jest": "27.5.1",
-    "@types/node": "16.11.35",
+    "@types/node": "16.11.36",
     "aws-cdk": "2.20.0",
     "husky": "8.0.1",
     "jest": "28.1.0",
