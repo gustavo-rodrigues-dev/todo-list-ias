@@ -1,4 +1,4 @@
-import { CfnOutput } from 'aws-cdk-lib';
+import { CfnOutput, Stack } from 'aws-cdk-lib';
 import { DockerImageFunction, DockerImageCode } from 'aws-cdk-lib/aws-lambda';
 import { LambdaRestApi } from 'aws-cdk-lib/aws-apigateway';
 import path from 'path';
@@ -42,6 +42,7 @@ export class ApiFunctionStack {
       environment: {
         BUCKET_NAME: bucket.bucketName,
         TABLE_NAME: dynamodb.tableName,
+        REGION: Stack.of(stack).availabilityZones[0],
       },
     });
 
