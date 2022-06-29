@@ -1,6 +1,8 @@
 import { Test } from '@nestjs/testing';
 import { DynamooseModule } from 'nestjs-dynamoose';
 import { CreateTaskHandler } from './create-task.handler';
+import { CreatedTaskFailureHandler } from './created-task-failure.handler';
+import { CreatedTaskSuccessHandler } from './created-task-success.handler';
 import { CreateTaskService } from './services/create-task';
 import { TaskModule } from './task.module';
 import { TaskRepository } from './task.repository';
@@ -9,6 +11,9 @@ describe(TaskModule.name, () => {
   let createTaskService: CreateTaskService;
   let createTaskHandler: CreateTaskHandler;
   let taskRepository: TaskRepository;
+  let createdTaskFailureHandle: CreatedTaskFailureHandler;
+  let createdTaskSuccessHandle: CreatedTaskSuccessHandler;
+
   beforeAll(async () => {
     const moduleRef = await Test.createTestingModule({
       imports: [
@@ -25,6 +30,12 @@ describe(TaskModule.name, () => {
     createTaskService = moduleRef.get<CreateTaskService>(CreateTaskService);
     createTaskHandler = moduleRef.get<CreateTaskHandler>(CreateTaskHandler);
     taskRepository = moduleRef.get<TaskRepository>(TaskRepository);
+    createdTaskFailureHandle = moduleRef.get<CreatedTaskFailureHandler>(
+      CreatedTaskFailureHandler,
+    );
+    createdTaskSuccessHandle = moduleRef.get<CreatedTaskSuccessHandler>(
+      CreatedTaskSuccessHandler,
+    );
   });
 
   describe(`${TaskModule.name}.imports()`, () => {
@@ -38,6 +49,18 @@ describe(TaskModule.name, () => {
 
     it('Should module contains TaskRepository', () => {
       expect(taskRepository).toBeInstanceOf(TaskRepository);
+    });
+
+    it('Should module contains CreatedTaskFailureHandler', () => {
+      expect(createdTaskFailureHandle).toBeInstanceOf(
+        CreatedTaskFailureHandler,
+      );
+    });
+
+    it('Should module contains CreatedTaskSuccessHandler', () => {
+      expect(createdTaskSuccessHandle).toBeInstanceOf(
+        CreatedTaskSuccessHandler,
+      );
     });
   });
 });
