@@ -1,5 +1,6 @@
 import { AppService } from './app.service';
 import { bootstrap } from './main';
+jest.useFakeTimers();
 
 describe('bootstrap()', () => {
   it('Should load AppService ', async () => {

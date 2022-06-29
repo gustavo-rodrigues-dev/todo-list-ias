@@ -16,6 +16,7 @@ export class DynamoDbStack {
       billingMode: BillingMode.PAY_PER_REQUEST,
       tableClass: TableClass.STANDARD_INFREQUENT_ACCESS,
       encryption: TableEncryption.AWS_MANAGED,
+      tableName: 'task',
     });
     stack.resources.set(ToDoDynamoDb, db);
 
