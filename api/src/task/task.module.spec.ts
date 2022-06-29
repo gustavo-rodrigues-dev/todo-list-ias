@@ -4,7 +4,7 @@ import { CreateTaskHandler } from './create-task.handler';
 import { CreateTaskService } from './services/create-task';
 import { TaskModule } from './task.module';
 import { TaskRepository } from './task.repository';
-
+jest.useFakeTimers();
 describe(TaskModule.name, () => {
   let createTaskService: CreateTaskService;
   let createTaskHandler: CreateTaskHandler;

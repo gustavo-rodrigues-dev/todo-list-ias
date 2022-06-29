@@ -1,6 +1,7 @@
 import { Test } from '@nestjs/testing';
 import { AppModule } from './app.module';
 import { AppService } from './app.service';
+jest.useFakeTimers();
 
 describe(AppModule.name, () => {
   let service: AppService;

@@ -1,5 +1,6 @@
 import { TaskRepository } from './task.repository';
 import * as uuid from 'uuid';
+jest.useFakeTimers();
 jest.mock('uuid');
 describe(TaskRepository.name, () => {
   let target: TaskRepository;

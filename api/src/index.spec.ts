@@ -1,4 +1,5 @@
 import { handleHello } from '.';
+jest.useFakeTimers();
 
 describe('handleHello()', () => {
   it('Should load AppService ', async () => {
