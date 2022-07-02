@@ -23,4 +23,4 @@ RUN rm -rf ${LAMBDA_TASK_ROOT}/src
 # create non root user and change allow execute command for non root user
 RUN mv ${LAMBDA_TASK_ROOT}/dist/** ${LAMBDA_TASK_ROOT}/
 
-CMD [ "index.handleHello" ]
+CMD [ "index.handle" ]

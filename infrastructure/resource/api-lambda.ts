@@ -1,4 +1,4 @@
-import { CfnOutput, Stack } from 'aws-cdk-lib';
+import { CfnOutput, Duration, Stack } from 'aws-cdk-lib';
 import { DockerImageFunction, DockerImageCode } from 'aws-cdk-lib/aws-lambda';
 import { LambdaRestApi } from 'aws-cdk-lib/aws-apigateway';
 import path from 'path';
@@ -35,15 +35,18 @@ export class ApiFunctionStack {
       code: DockerImageCode.fromImageAsset(
         path.join(__dirname, '..', '..', 'api'),
         {
-          cmd: ['index.handleHello'],
+          cmd: ['index.handle'],
           entrypoint: ['/lambda-entrypoint.sh'],
         },
       ),
       environment: {
         BUCKET_NAME: bucket.bucketName,
         TABLE_NAME: dynamodb.tableName,
-        REGION: Stack.of(stack).availabilityZones[0],
+        DB_STUB: 'False',
+        REGION: Stack.of(stack).region,
       },
+      // eslint-disable-next-line no-magic-numbers
+      timeout: Duration.seconds(120),
     });
 
     const bucketContainerPermissions = new PolicyStatement({

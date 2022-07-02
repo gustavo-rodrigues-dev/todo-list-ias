@@ -1,5 +1,5 @@
-import { CreateTaskCommand } from './create-task.command';
-import { TaskDTO } from './task.dto';
+import { CreateTaskCommand } from '../command/create-task.command';
+import { TaskDTO } from '../task.dto';
 
 export class CreatedTaskSuccessEvent {
   constructor(

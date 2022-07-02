@@ -1,21 +1,18 @@
 import { Test } from '@nestjs/testing';
 import { AppModule } from './app.module';
-import { AppService } from './app.service';
+import { CreateTaskService } from './task/services/create-task';
 jest.useFakeTimers();
 
 describe(AppModule.name, () => {
-  let service: AppService;
+  let service: CreateTaskService;
   beforeEach(async () => {
     const moduleRef = await Test.createTestingModule({
       imports: [AppModule],
     }).compile();
 
-    service = moduleRef.get<AppService>(AppService);
+    service = moduleRef.get<CreateTaskService>(CreateTaskService);
   });
-
-  describe(`${AppModule.name}.imports()`, () => {
-    it('Should module contains AppService ', () => {
-      expect(service).toBeInstanceOf(AppService);
-    });
+  it('should be defined', () => {
+    expect(service).toBeDefined();
   });
 });

@@ -1,0 +1,18 @@
+service: task-api
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+plugins:
+  - serverless-offline
+
+functions:
+  index:
+    handler: dist/index.handle
+    events:
+      - http:
+          method: ANY
+          path: /
+      - http:
+          method: ANY
+          path: '{proxy+}'

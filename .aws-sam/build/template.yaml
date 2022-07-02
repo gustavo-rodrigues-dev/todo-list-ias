@@ -1,0 +1,509 @@
+Resources:
+  ToDoBucketStack23850757:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+        - ServerSideEncryptionByDefault:
+            SSEAlgorithm: AES256
+      Tags:
+      - Key: project
+        Value: to-do-stack
+    UpdateReplacePolicy: Retain
+    DeletionPolicy: Retain
+    Metadata:
+      aws:cdk:path: CdkTodoStack/ToDoBucketStack/Resource
+  TodoTable585F1D6B:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      KeySchema:
+      - AttributeName: id
+        KeyType: HASH
+      AttributeDefinitions:
+      - AttributeName: id
+        AttributeType: S
+      BillingMode: PAY_PER_REQUEST
+      SSESpecification:
+        SSEEnabled: true
+      TableClass: STANDARD_INFREQUENT_ACCESS
+      TableName: task
+      Tags:
+      - Key: project
+        Value: to-do-stack
+    UpdateReplacePolicy: Retain
+    DeletionPolicy: Retain
+    Metadata:
+      aws:cdk:path: CdkTodoStack/TodoTable/Resource
+  ApiLambdaServiceRole1CC7D0F3:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Statement:
+        - Action: sts:AssumeRole
+          Effect: Allow
+          Principal:
+            Service: lambda.amazonaws.com
+        Version: '2012-10-17'
+      ManagedPolicyArns:
+      - Fn::Join:
+        - ''
+        - - 'arn:'
+          - Ref: AWS::Partition
+          - :iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
+      Tags:
+      - Key: project
+        Value: to-do-stack
+    Metadata:
+      aws:cdk:path: CdkTodoStack/ApiLambda/ServiceRole/Resource
+  ApiLambdaServiceRoleDefaultPolicyF1B57697:
+    Type: AWS::IAM::Policy
+    Properties:
+      PolicyDocument:
+        Statement:
+        - Action: S3:ListBucket
+          Effect: Allow
+          Resource:
+            Fn::GetAtt:
+            - ToDoBucketStack23850757
+            - Arn
+        - Action:
+          - S3:GetObject
+          - S3:PutObject
+          Effect: Allow
+          Resource:
+            Fn::Join:
+            - ''
+            - - Fn::GetAtt:
+                - ToDoBucketStack23850757
+                - Arn
+              - /*
+        - Action:
+          - dynamodb:BatchGet*
+          - dynamodb:DescribeStream
+          - dynamodb:DescribeTable
+          - dynamodb:Get*
+          - dynamodb:Query
+          - dynamodb:Scan
+          - dynamodb:BatchWrite*
+          - dynamodb:CreateTable
+          - dynamodb:Delete*
+          - dynamodb:Update*
+          - dynamodb:PutItem
+          Effect: Allow
+          Resource:
+            Fn::GetAtt:
+            - TodoTable585F1D6B
+            - Arn
+        Version: '2012-10-17'
+      PolicyName: ApiLambdaServiceRoleDefaultPolicyF1B57697
+      Roles:
+      - Ref: ApiLambdaServiceRole1CC7D0F3
+    Metadata:
+      aws:cdk:path: CdkTodoStack/ApiLambda/ServiceRole/DefaultPolicy/Resource
+  ApiLambda91D2282D:
+    Type: AWS::Lambda::Function
+    Properties:
+      Code:
+        ImageUri: apilambda91d2282d:latest
+      Role:
+        Fn::GetAtt:
+        - ApiLambdaServiceRole1CC7D0F3
+        - Arn
+      Environment:
+        Variables:
+          BUCKET_NAME:
+            Ref: ToDoBucketStack23850757
+          TABLE_NAME:
+            Ref: TodoTable585F1D6B
+          REGION:
+            Fn::Select:
+            - 0
+            - Fn::GetAZs: ''
+      ImageConfig:
+        Command:
+        - index.handle
+        EntryPoint:
+        - /lambda-entrypoint.sh
+      PackageType: Image
+      Tags:
+      - Key: project
+        Value: to-do-stack
+    DependsOn:
+    - ApiLambdaServiceRoleDefaultPolicyF1B57697
+    - ApiLambdaServiceRole1CC7D0F3
+    Metadata:
+      DockerBuildArgs: {}
+      DockerContext: /Users/gustavos.rodrigues/Workspace/pessoal/cdk-course/cdk.out/asset.557d2370368ae16df9804f26db0f2d745d56d074e3d9742edb16a474a4e225c5
+      Dockerfile: Dockerfile
+      SamNormalized: true
+      SamResourceId: ApiLambda
+      aws:asset:dockerfile-path: Dockerfile
+      aws:asset:path: ../../cdk.out/asset.557d2370368ae16df9804f26db0f2d745d56d074e3d9742edb16a474a4e225c5
+      aws:asset:property: Code.ImageUri
+      aws:cdk:path: CdkTodoStack/ApiLambda/Resource
+  ToDoApiCB50405F:
+    Type: AWS::ApiGateway::RestApi
+    Properties:
+      Name: ToDoApi
+      Tags:
+      - Key: project
+        Value: to-do-stack
+    Metadata:
+      aws:cdk:path: CdkTodoStack/ToDoApi/Resource
+  ToDoApiCloudWatchRole5C83FD39:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Statement:
+        - Action: sts:AssumeRole
+          Effect: Allow
+          Principal:
+            Service: apigateway.amazonaws.com
+        Version: '2012-10-17'
+      ManagedPolicyArns:
+      - Fn::Join:
+        - ''
+        - - 'arn:'
+          - Ref: AWS::Partition
+          - :iam::aws:policy/service-role/AmazonAPIGatewayPushToCloudWatchLogs
+      Tags:
+      - Key: project
+        Value: to-do-stack
+    Metadata:
+      aws:cdk:path: CdkTodoStack/ToDoApi/CloudWatchRole/Resource
+  ToDoApiAccount0BCCB737:
+    Type: AWS::ApiGateway::Account
+    Properties:
+      CloudWatchRoleArn:
+        Fn::GetAtt:
+        - ToDoApiCloudWatchRole5C83FD39
+        - Arn
+    DependsOn:
+    - ToDoApiCB50405F
+    Metadata:
+      aws:cdk:path: CdkTodoStack/ToDoApi/Account
+  ToDoApiDeployment903D5882f21c30b1d56f3911801cf1acbce55b66:
+    Type: AWS::ApiGateway::Deployment
+    Properties:
+      RestApiId:
+        Ref: ToDoApiCB50405F
+      Description: Automatically created by the RestApi construct
+    DependsOn:
+    - ToDoApiproxyANYE62D66E9
+    - ToDoApiproxy98DAB61A
+    - ToDoApiANY51A8D247
+    Metadata:
+      aws:cdk:path: CdkTodoStack/ToDoApi/Deployment/Resource
+  ToDoApiDeploymentStageprod6F950C85:
+    Type: AWS::ApiGateway::Stage
+    Properties:
+      RestApiId:
+        Ref: ToDoApiCB50405F
+      DeploymentId:
+        Ref: ToDoApiDeployment903D5882f21c30b1d56f3911801cf1acbce55b66
+      StageName: prod
+      Tags:
+      - Key: project
+        Value: to-do-stack
+    DependsOn:
+    - ToDoApiAccount0BCCB737
+    Metadata:
+      aws:cdk:path: CdkTodoStack/ToDoApi/DeploymentStage.prod/Resource
+  ToDoApiproxy98DAB61A:
+    Type: AWS::ApiGateway::Resource
+    Properties:
+      ParentId:
+        Fn::GetAtt:
+        - ToDoApiCB50405F
+        - RootResourceId
+      PathPart: '{proxy+}'
+      RestApiId:
+        Ref: ToDoApiCB50405F
+    Metadata:
+      aws:cdk:path: CdkTodoStack/ToDoApi/Default/{proxy+}/Resource
+  ToDoApiproxyANYApiPermissionCdkTodoStackToDoApiAEB8F9A3ANYproxyFD13026A:
+    Type: AWS::Lambda::Permission
+    Properties:
+      Action: lambda:InvokeFunction
+      FunctionName:
+        Fn::GetAtt:
+        - ApiLambda91D2282D
+        - Arn
+      Principal: apigateway.amazonaws.com
+      SourceArn:
+        Fn::Join:
+        - ''
+        - - 'arn:'
+          - Ref: AWS::Partition
+          - ':execute-api:'
+          - Ref: AWS::Region
+          - ':'
+          - Ref: AWS::AccountId
+          - ':'
+          - Ref: ToDoApiCB50405F
+          - /
+          - Ref: ToDoApiDeploymentStageprod6F950C85
+          - /*/*
+    Metadata:
+      aws:cdk:path: CdkTodoStack/ToDoApi/Default/{proxy+}/ANY/ApiPermission.CdkTodoStackToDoApiAEB8F9A3.ANY..{proxy+}
+  ToDoApiproxyANYApiPermissionTestCdkTodoStackToDoApiAEB8F9A3ANYproxyBE2085AA:
+    Type: AWS::Lambda::Permission
+    Properties:
+      Action: lambda:InvokeFunction
+      FunctionName:
+        Fn::GetAtt:
+        - ApiLambda91D2282D
+        - Arn
+      Principal: apigateway.amazonaws.com
+      SourceArn:
+        Fn::Join:
+        - ''
+        - - 'arn:'
+          - Ref: AWS::Partition
+          - ':execute-api:'
+          - Ref: AWS::Region
+          - ':'
+          - Ref: AWS::AccountId
+          - ':'
+          - Ref: ToDoApiCB50405F
+          - /test-invoke-stage/*/*
+    Metadata:
+      aws:cdk:path: CdkTodoStack/ToDoApi/Default/{proxy+}/ANY/ApiPermission.Test.CdkTodoStackToDoApiAEB8F9A3.ANY..{proxy+}
+  ToDoApiproxyANYE62D66E9:
+    Type: AWS::ApiGateway::Method
+    Properties:
+      HttpMethod: ANY
+      ResourceId:
+        Ref: ToDoApiproxy98DAB61A
+      RestApiId:
+        Ref: ToDoApiCB50405F
+      AuthorizationType: NONE
+      Integration:
+        IntegrationHttpMethod: POST
+        Type: AWS_PROXY
+        Uri:
+          Fn::Join:
+          - ''
+          - - 'arn:'
+            - Ref: AWS::Partition
+            - ':apigateway:'
+            - Ref: AWS::Region
+            - :lambda:path/2015-03-31/functions/
+            - Fn::GetAtt:
+              - ApiLambda91D2282D
+              - Arn
+            - /invocations
+    Metadata:
+      aws:cdk:path: CdkTodoStack/ToDoApi/Default/{proxy+}/ANY/Resource
+  ToDoApiANYApiPermissionCdkTodoStackToDoApiAEB8F9A3ANY9E745B8B:
+    Type: AWS::Lambda::Permission
+    Properties:
+      Action: lambda:InvokeFunction
+      FunctionName:
+        Fn::GetAtt:
+        - ApiLambda91D2282D
+        - Arn
+      Principal: apigateway.amazonaws.com
+      SourceArn:
+        Fn::Join:
+        - ''
+        - - 'arn:'
+          - Ref: AWS::Partition
+          - ':execute-api:'
+          - Ref: AWS::Region
+          - ':'
+          - Ref: AWS::AccountId
+          - ':'
+          - Ref: ToDoApiCB50405F
+          - /
+          - Ref: ToDoApiDeploymentStageprod6F950C85
+          - /*/
+    Metadata:
+      aws:cdk:path: CdkTodoStack/ToDoApi/Default/ANY/ApiPermission.CdkTodoStackToDoApiAEB8F9A3.ANY..
+  ToDoApiANYApiPermissionTestCdkTodoStackToDoApiAEB8F9A3ANY0ACFF292:
+    Type: AWS::Lambda::Permission
+    Properties:
+      Action: lambda:InvokeFunction
+      FunctionName:
+        Fn::GetAtt:
+        - ApiLambda91D2282D
+        - Arn
+      Principal: apigateway.amazonaws.com
+      SourceArn:
+        Fn::Join:
+        - ''
+        - - 'arn:'
+          - Ref: AWS::Partition
+          - ':execute-api:'
+          - Ref: AWS::Region
+          - ':'
+          - Ref: AWS::AccountId
+          - ':'
+          - Ref: ToDoApiCB50405F
+          - /test-invoke-stage/*/
+    Metadata:
+      aws:cdk:path: CdkTodoStack/ToDoApi/Default/ANY/ApiPermission.Test.CdkTodoStackToDoApiAEB8F9A3.ANY..
+  ToDoApiANY51A8D247:
+    Type: AWS::ApiGateway::Method
+    Properties:
+      HttpMethod: ANY
+      ResourceId:
+        Fn::GetAtt:
+        - ToDoApiCB50405F
+        - RootResourceId
+      RestApiId:
+        Ref: ToDoApiCB50405F
+      AuthorizationType: NONE
+      Integration:
+        IntegrationHttpMethod: POST
+        Type: AWS_PROXY
+        Uri:
+          Fn::Join:
+          - ''
+          - - 'arn:'
+            - Ref: AWS::Partition
+            - ':apigateway:'
+            - Ref: AWS::Region
+            - :lambda:path/2015-03-31/functions/
+            - Fn::GetAtt:
+              - ApiLambda91D2282D
+              - Arn
+            - /invocations
+    Metadata:
+      aws:cdk:path: CdkTodoStack/ToDoApi/Default/ANY/Resource
+  CDKMetadata:
+    Type: AWS::CDK::Metadata
+    Properties:
+      Analytics: v2:deflate64:H4sIAAAAAAAA/1WQ207DMAyGn4X7zLCBkLjcQUhIIKbC/eQlpnhr4ipJGVXVdydJOYwrf/lt/3a8gMUdzC/wFGbaHGcN72F4iaiPKkm7IVzDsOr0kaJav7mJRmV6h1ZMKn3FfUM5VWBUDdq9QRg2kir9g8Wa7junI4vLVee8JW85hPQaFaOFoZLJqsStNKz7UldoVKT9DkOgGODMfZmVnIOKWgkcxfcrDKSw5RojnbCH4bFsVVGIy5bLiD9cai2di2pDbSO9JVd+evZK16jLXhOkVum8pjJk6+Wz/1G+jSd+ovguJksTjWPm5y62Xfz1UGX77Muu/teeeC3OcCzncWIIDuHyY34L8xu4ujgE5plPa7MlqKb4Bd5RfHbKAQAA
+    Metadata:
+      aws:cdk:path: CdkTodoStack/CDKMetadata/Default
+    Condition: CDKMetadataAvailable
+Outputs:
+  ToDoBucketStackTodoBucketNameExport81992C41:
+    Value:
+      Ref: ToDoBucketStack23850757
+    Export:
+      Name: bucketName
+  TodoTableTodoTableNameExport844BA164:
+    Value:
+      Ref: TodoTable585F1D6B
+    Export:
+      Name: tableName
+  ApiLambdaApiLambdaExportC9391DB8:
+    Value:
+      Ref: ApiLambda91D2282D
+    Export:
+      Name: FunctionName
+  ToDoApiEndpoint4DBC4AB7:
+    Value:
+      Fn::Join:
+      - ''
+      - - https://
+        - Ref: ToDoApiCB50405F
+        - .execute-api.
+        - Ref: AWS::Region
+        - .
+        - Ref: AWS::URLSuffix
+        - /
+        - Ref: ToDoApiDeploymentStageprod6F950C85
+        - /
+  ToDoApiApiGatewayExportB9D74EFE:
+    Value: ToDoApi
+    Export:
+      Name: RestApiName
+  ToDoStackCreate:
+    Value: CdkTodoStack
+    Export:
+      Name: StackId
+Conditions:
+  CDKMetadataAvailable:
+    Fn::Or:
+    - Fn::Or:
+      - Fn::Equals:
+        - Ref: AWS::Region
+        - af-south-1
+      - Fn::Equals:
+        - Ref: AWS::Region
+        - ap-east-1
+      - Fn::Equals:
+        - Ref: AWS::Region
+        - ap-northeast-1
+      - Fn::Equals:
+        - Ref: AWS::Region
+        - ap-northeast-2
+      - Fn::Equals:
+        - Ref: AWS::Region
+        - ap-south-1
+      - Fn::Equals:
+        - Ref: AWS::Region
+        - ap-southeast-1
+      - Fn::Equals:
+        - Ref: AWS::Region
+        - ap-southeast-2
+      - Fn::Equals:
+        - Ref: AWS::Region
+        - ca-central-1
+      - Fn::Equals:
+        - Ref: AWS::Region
+        - cn-north-1
+      - Fn::Equals:
+        - Ref: AWS::Region
+        - cn-northwest-1
+    - Fn::Or:
+      - Fn::Equals:
+        - Ref: AWS::Region
+        - eu-central-1
+      - Fn::Equals:
+        - Ref: AWS::Region
+        - eu-north-1
+      - Fn::Equals:
+        - Ref: AWS::Region
+        - eu-south-1
+      - Fn::Equals:
+        - Ref: AWS::Region
+        - eu-west-1
+      - Fn::Equals:
+        - Ref: AWS::Region
+        - eu-west-2
+      - Fn::Equals:
+        - Ref: AWS::Region
+        - eu-west-3
+      - Fn::Equals:
+        - Ref: AWS::Region
+        - me-south-1
+      - Fn::Equals:
+        - Ref: AWS::Region
+        - sa-east-1
+      - Fn::Equals:
+        - Ref: AWS::Region
+        - us-east-1
+      - Fn::Equals:
+        - Ref: AWS::Region
+        - us-east-2
+    - Fn::Or:
+      - Fn::Equals:
+        - Ref: AWS::Region
+        - us-west-1
+      - Fn::Equals:
+        - Ref: AWS::Region
+        - us-west-2
+Parameters:
+  BootstrapVersion:
+    Type: AWS::SSM::Parameter::Value<String>
+    Default: /cdk-bootstrap/hnb659fds/version
+    Description: Version of the CDK Bootstrap resources in this environment, automatically
+      retrieved from SSM Parameter Store. [cdk:skip]
+Rules:
+  CheckBootstrapVersion:
+    Assertions:
+    - Assert:
+        Fn::Not:
+        - Fn::Contains:
+          - - '1'
+            - '2'
+            - '3'
+            - '4'
+            - '5'
+          - Ref: BootstrapVersion
+      AssertDescription: CDK bootstrap stack version 6 required. Please run 'cdk bootstrap'
+        with a recent version of the CDK CLI.

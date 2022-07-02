@@ -1,6 +1,6 @@
 import { ValidationError } from 'class-validator';
 import { CreateTaskCommand } from './create-task.command';
-import { TaskDTO } from './task.dto';
+import { TaskDTO } from '../task.dto';
 
 describe(CreateTaskCommand.name, () => {
   describe(`${TaskDTO.name}.constructor()`, () => {

@@ -1,5 +1,5 @@
 import { ValidationError } from 'class-validator';
-import { CreateTaskCommand } from './create-task.command';
+import { CreateTaskCommand } from '../command/create-task.command';
 
 export class CreatedTaskFailureEvent {
   constructor(
