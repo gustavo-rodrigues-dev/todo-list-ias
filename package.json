@@ -5,6 +5,7 @@
     "ias": "./dist/infrastructure/bin.js"
   },
   "scripts": {
+    "start:local": "sam local start-api  -t ./cdk.out/CdkTaStack.template.json",
     "build": "tsc",
     "watch": "tsc -w",
     "test": "jest",
