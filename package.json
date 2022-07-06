@@ -38,7 +38,7 @@
     "eslint-config-prettier": "8.5.0",
     "eslint-plugin-prettier": "4.2.1",
     "eslint-plugin-unused-imports": "2.0.0",
-    "moment": "2.29.3",
+    "moment": "2.29.4",
     "nanoid": "4.0.0",
     "prettier": "2.7.1",
     "source-map-support": "0.5.21"
