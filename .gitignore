@@ -194,6 +194,7 @@ web_modules/
 # CDK asset staging directory
 .cdk.staging
 cdk.out
+.aws-sam
 
 # build
 ./dist
