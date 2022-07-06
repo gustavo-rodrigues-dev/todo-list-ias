@@ -1,7 +1,7 @@
 import { DynamooseModule } from 'nestjs-dynamoose';
 import { Module } from '@nestjs/common';
+import { DynamoDB } from 'aws-sdk';
 import configuration from './config';
-import { AppService } from './app.service';
 import { TaskModule } from './task/task.module';
 import { ConfigModule } from '@nestjs/config';
 import { CqrsModule } from '@nestjs/cqrs';
@@ -12,14 +12,16 @@ import { CqrsModule } from '@nestjs/cqrs';
       load: [configuration],
     }),
     DynamooseModule.forRoot({
-      aws: {
+      ddb: new DynamoDB({
         region: configuration().region,
-      },
-      local: configuration().database.isNotStub,
+        endpoint: process.env.AWS_SAM_LOCAL
+          ? 'http://dynamodb:8000'
+          : `https://dynamodb.${configuration().region}.amazonaws.com`,
+      }),
     }),
     CqrsModule,
     TaskModule,
   ],
-  providers: [AppService],
+  providers: [],
 })
 export class AppModule {}

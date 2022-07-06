@@ -1,21 +1,29 @@
-import { Test } from '@nestjs/testing';
+import { EventBus } from '@nestjs/cqrs';
+import { Test, TestingModule } from '@nestjs/testing';
 import { DynamooseModule } from 'nestjs-dynamoose';
-import { CreateTaskHandler } from './create-task.handler';
-import { CreatedTaskFailureHandler } from './created-task-failure.handler';
-import { CreatedTaskSuccessHandler } from './created-task-success.handler';
+import { CreateTaskHandler } from './command/create-task.handler';
+import { CreatedTaskFailureHandler } from './event/created-task-failure.handler';
+import { CreatedTaskSuccessHandler } from './event/created-task-success.handler';
 import { CreateTaskService } from './services/create-task';
+import { TaskController } from './task.controller';
 import { TaskModule } from './task.module';
 import { TaskRepository } from './task.repository';
 jest.useFakeTimers();
 describe(TaskModule.name, () => {
+  let moduleRef: TestingModule;
   let createTaskService: CreateTaskService;
   let createTaskHandler: CreateTaskHandler;
   let taskRepository: TaskRepository;
   let createdTaskFailureHandle: CreatedTaskFailureHandler;
   let createdTaskSuccessHandle: CreatedTaskSuccessHandler;
+  let taskController: TaskController;
+  let eventBus: EventBus;
 
   beforeAll(async () => {
-    const moduleRef = await Test.createTestingModule({
+    eventBus = {
+      register: jest.fn().mockImplementation(() => {}),
+    } as any;
+    moduleRef = await Test.createTestingModule({
       imports: [
         DynamooseModule.forRoot({
           aws: {
@@ -25,7 +33,10 @@ describe(TaskModule.name, () => {
         }),
         TaskModule,
       ],
-    }).compile();
+    })
+      .overrideProvider(EventBus)
+      .useValue(eventBus)
+      .compile();
 
     createTaskService = moduleRef.get<CreateTaskService>(CreateTaskService);
     createTaskHandler = moduleRef.get<CreateTaskHandler>(CreateTaskHandler);
@@ -36,6 +47,7 @@ describe(TaskModule.name, () => {
     createdTaskSuccessHandle = moduleRef.get<CreatedTaskSuccessHandler>(
       CreatedTaskSuccessHandler,
     );
+    taskController = moduleRef.get<TaskController>(TaskController);
   });
 
   describe(`${TaskModule.name}.imports()`, () => {
@@ -61,6 +73,10 @@ describe(TaskModule.name, () => {
       expect(createdTaskSuccessHandle).toBeInstanceOf(
         CreatedTaskSuccessHandler,
       );
+    });
+
+    it('Should module contains TaskController', () => {
+      expect(taskController).toBeInstanceOf(TaskController);
     });
   });
 });

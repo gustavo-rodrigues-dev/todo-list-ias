@@ -5,4 +5,6 @@ module.exports = {
   transform: {
     '^.+\\.tsx?$': 'ts-jest',
   },
+  setupFiles: ['<rootDir>/test-setup.js'],
+  coveragePathIgnorePatterns: ['<rootDir>/src/index.ts'],
 };

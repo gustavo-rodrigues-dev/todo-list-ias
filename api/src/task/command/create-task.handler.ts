@@ -1,9 +1,9 @@
 import { CommandHandler, EventBus, ICommandHandler } from '@nestjs/cqrs';
 import { CreateTaskCommand } from './create-task.command';
-import { TaskDTO } from './task.dto';
-import { CreateTaskService } from './services/create-task';
-import { CreatedTaskFailureEvent } from './created-task-failure.event';
-import { CreatedTaskSuccessEvent } from './created-task-success.event';
+import { TaskDTO } from '../task.dto';
+import { CreateTaskService } from '../services/create-task';
+import { CreatedTaskFailureEvent } from '../event/created-task-failure.event';
+import { CreatedTaskSuccessEvent } from '../event/created-task-success.event';
 
 @CommandHandler(CreateTaskCommand)
 export class CreateTaskHandler implements ICommandHandler<CreateTaskCommand> {

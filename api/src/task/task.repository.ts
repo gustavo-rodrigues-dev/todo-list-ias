@@ -7,7 +7,7 @@ import { TaskKey, TaskModel } from './task.model';
 @Injectable()
 export class TaskRepository {
   constructor(
-    @InjectModel('Task')
+    @InjectModel('task')
     private taskModel: Model<TaskModel, TaskKey>,
   ) {}
 

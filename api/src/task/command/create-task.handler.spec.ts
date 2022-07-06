@@ -1,9 +1,9 @@
 import { Test } from '@nestjs/testing';
 import { CqrsModule, EventBus } from '@nestjs/cqrs';
 import { CreateTaskHandler } from './create-task.handler';
-import { CreateTaskService } from './services/create-task';
-import { CreatedTaskFailureHandler } from './created-task-failure.handler';
-import { CreatedTaskSuccessHandler } from './created-task-success.handler';
+import { CreateTaskService } from '../services/create-task';
+import { CreatedTaskFailureHandler } from '../event/created-task-failure.handler';
+import { CreatedTaskSuccessHandler } from '../event/created-task-success.handler';
 
 describe(CreateTaskHandler.name, () => {
   let target: CreateTaskHandler;

@@ -1,0 +1,1 @@
+{"version":3,"file":"stack-resource.d.ts","sourceRoot":"","sources":["../../infrastructure/stack-resource.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,KAAK,EAAE,QAAQ,EAAE,SAAS,EAAE,MAAM,kBAAkB,CAAC;AAE9D,MAAM,WAAW,aAAc,SAAQ,KAAK;IAC1C,SAAS,EAAE,GAAG,CAAC,MAAM,GAAG,MAAM,EAAE,QAAQ,CAAC,CAAC;IAC1C,OAAO,EAAE,GAAG,CAAC,MAAM,GAAG,MAAM,EAAE,CAAC,SAAS,CAAC,CAAC,CAAC;CAC5C"}
