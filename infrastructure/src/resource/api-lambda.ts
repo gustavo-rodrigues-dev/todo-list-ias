@@ -33,7 +33,7 @@ export class ApiFunctionStack {
 
     const apiFunction = new DockerImageFunction(stack, 'ApiLambda', {
       code: DockerImageCode.fromImageAsset(
-        path.join(__dirname, '..', '..', 'api'),
+        path.join(__dirname, '..', '..', '..', 'api'),
         {
           cmd: ['index.handle'],
           entrypoint: ['/lambda-entrypoint.sh'],
