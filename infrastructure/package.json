@@ -18,14 +18,14 @@
     "@commitlint/config-conventional": "17.0.3",
     "@types/jest": "28.1.4",
     "@types/node": "16.11.43",
-    "aws-cdk": "2.30.0",
+    "aws-cdk": "2.31.0",
     "jest": "28.1.2",
     "ts-jest": "28.0.5",
     "ts-node": "10.8.2",
     "typescript": "4.7.4"
   },
   "dependencies": {
-    "aws-cdk-lib": "2.30.0",
+    "aws-cdk-lib": "2.31.0",
     "constructs": "10.1.43",
     "nanoid": "4.0.0",
     "source-map-support": "0.5.21"
