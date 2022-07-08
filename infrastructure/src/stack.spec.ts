@@ -1,6 +1,6 @@
 import * as cdk from 'aws-cdk-lib';
 import { Match, Template } from 'aws-cdk-lib/assertions';
-import { Stack } from '../../infrastructure/stack';
+import { Stack } from './stack';
 
 describe('CdkBaseStack.constructor', () => {
   const app = new cdk.App();

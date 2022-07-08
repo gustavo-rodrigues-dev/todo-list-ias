@@ -1,4 +1,4 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
-npm run lint:code:style && npm test
+npm run lint:code:style && npm run lint:code:format && cd ./infrastructure && npm run test && cd ../api && npm run test && cd ..

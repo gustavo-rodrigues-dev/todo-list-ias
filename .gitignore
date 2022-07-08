@@ -197,6 +197,6 @@ cdk.out
 .aws-sam
 
 # build
-./dist
-./build
+dist
+build
 

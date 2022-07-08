@@ -1,4 +1,4 @@
 "hooks": {
-  "pre-commit": "npm run lint:code:style && npm run test",
-  "post-merge": "npm ci"
+  "pre-commit": "npm run lint:code:style && npm run lint:code:format && cd ./infrastructure && npm run test && cd ../api && npm run test && cd ..",
+  "post-merge": "npm ci && cd ./infrastructure && npm ci && cd ../api && npm ci && cd .."
 }
