@@ -35,4 +35,9 @@ export class TaskDTO {
     example: '2022-04-08T06:51:13-03:00',
   })
   updatedAt?: string;
+
+  @ApiProperty({
+    example: true,
+  })
+  done?: boolean;
 }

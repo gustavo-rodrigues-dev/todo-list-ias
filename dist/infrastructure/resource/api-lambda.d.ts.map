@@ -1,1 +1,0 @@
-{"version":3,"file":"api-lambda.d.ts","sourceRoot":"","sources":["../../../infrastructure/resource/api-lambda.ts"],"names":[],"mappings":"AAIA,OAAO,EAAE,aAAa,EAAE,MAAM,mBAAmB,CAAC;AAWlD,qBAAa,gBAAgB;gBACf,KAAK,EAAE,aAAa;CAwFjC"}

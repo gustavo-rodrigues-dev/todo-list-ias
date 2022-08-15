@@ -9,7 +9,9 @@
     "lint:code:format": "prettier .",
     "lint:code:format:fix": "prettier --write .",
     "lint:code:style": "eslint .",
-    "lint:code:style:fix": "eslint . --fix"
+    "lint:code:style:fix": "eslint . --fix",
+    "lint:code:fix": "npm run lint:code:format:fix && npm run lint:code:style:fix",
+    "lint:code": "npm run lint:code:format && npm run lint:code:style"
   },
   "devDependencies": {
     "@commitlint/cli": "17.0.3",

@@ -14,9 +14,7 @@ import { CqrsModule } from '@nestjs/cqrs';
     DynamooseModule.forRoot({
       ddb: new DynamoDB({
         region: configuration().region,
-        endpoint: process.env.AWS_SAM_LOCAL
-          ? 'http://dynamodb:8000'
-          : `https://dynamodb.${configuration().region}.amazonaws.com`,
+        endpoint: configuration().database.endpoint,
       }),
     }),
     CqrsModule,
