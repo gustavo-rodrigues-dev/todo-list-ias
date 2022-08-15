@@ -38,7 +38,7 @@
     "@nestjs/cqrs": "^8.0.3",
     "@nestjs/event-emitter": "^1.1.1",
     "@nestjs/platform-express": "^8.4.7",
-    "@nestjs/swagger": "^5.2.1",
+    "@nestjs/swagger": "^6.0.0",
     "@vendia/serverless-express": "^4.9.0",
     "aws-serverless-express": "^3.4.0",
     "class-transformer": "^0.5.1",
