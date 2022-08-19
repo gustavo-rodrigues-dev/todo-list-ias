@@ -12,8 +12,8 @@
     "lint:code:style:fix": "eslint . --fix",
     "lint:code:fix": "npm run lint:code:format:fix && npm run lint:code:style:fix",
     "lint:code": "npm run lint:code:format && npm run lint:code:style",
-    "lint:doc": "remark README.md --use remark-preset-lint-consistent --use remark-preset-lint-recommended",
-    "lint:doc:fix": "remark README.md --use remark-preset-lint-consistent --use remark-preset-lint-recommended -o README.md"
+    "lint:doc": "remark README.md",
+    "lint:doc:fix": "remark README.md -o README.md"
   },
   "devDependencies": {
     "@commitlint/cli": "17.0.3",
@@ -23,8 +23,10 @@
     "husky": "8.0.1",
     "remark": "14.0.2",
     "remark-cli": "11.0.0",
+    "remark-lint-list-item-indent": "^3.1.1",
     "remark-preset-lint-consistent": "5.1.1",
     "remark-preset-lint-recommended": "6.1.2",
+    "remark-stringify": "^10.0.2",
     "ts-node": "10.9.1",
     "typescript": "4.7.4"
   },

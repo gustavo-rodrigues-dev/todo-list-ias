@@ -1,0 +1,12 @@
+plugins:
+  - remark-preset-lint-recommended
+  - remark-preset-lint-consistent
+  - remark-stringify
+  - remark-lint-list-item-indent
+settings:
+  verbose: true
+  quote: "'"
+  quoteSmart: true
+  preferUnquoted: true
+  tab-size: space
+  space: 2
