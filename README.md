@@ -15,19 +15,19 @@ As for the unit tests, I kept them nested in implementing modules and classes, s
 
 ### Disclaimers
 
-#### _Why it use NestJS_
+#### *Why it use NestJS*
 
 In the API, I used NestJS to ease the application’s modularization and reduce the need to create non-functional codes with standardization.
 
-#### _Why wasn't it done using a standalone application_
+#### *Why wasn't it done using a standalone application*
 
 I chose to run a full proxy inside the nest. It was just a simplification; I know in advance that in terms of performance and API design, it is more advisable to use a standalone application and directly call each function and have a handle per route. [Ref](https://docs.nestjs.com/faq/serverless)
 
 ## Useful commands
 
-- `npm run build` compile typescript to js
-- `npm run watch` watch for changes and compile
-- `npm run test` perform the jest unit tests
-- `cdk deploy` deploy this stack to your default AWS account/region
-- `cdk diff` compare deployed stack with current state
-- `cdk synth` emits the synthesized CloudFormation template
+*   `npm run build` compile typescript to js
+*   `npm run watch` watch for changes and compile
+*   `npm run test` perform the jest unit tests
+*   `cdk deploy` deploy this stack to your default AWS account/region
+*   `cdk diff` compare deployed stack with current state
+*   `cdk synth` emits the synthesized CloudFormation template
