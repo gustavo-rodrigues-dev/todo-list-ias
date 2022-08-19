@@ -1,3 +1,5 @@
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/92522ff9e91842688d38143368ac280d)](https://app.codacy.com/gh/gustavobeavis/todo-list-ias?utm_source=github.com\&utm_medium=referral\&utm_content=gustavobeavis/todo-list-ias\&utm_campaign=Badge_Grade_Settings)
+
 ## Summary
 
 This project is structured in a mono-repository where it is possible to have an end-to-end view of the project, from the front-end to the infrastructure as code using CDK. In terms of technologies, I chose to make the most of AWS resources, especially Lambda, API Gateway, DynamoDB, and S3. Casually I may delve deeper, including SQS for some events.
