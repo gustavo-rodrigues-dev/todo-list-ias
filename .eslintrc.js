@@ -22,6 +22,8 @@ module.exports = {
     '*.py',
     '**/cdk.out/**',
     '.eslintrc.js',
+    '*.md',
+    '**.md',
   ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
