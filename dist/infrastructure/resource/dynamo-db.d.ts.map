@@ -1,1 +1,0 @@
-{"version":3,"file":"dynamo-db.d.ts","sourceRoot":"","sources":["../../../infrastructure/resource/dynamo-db.ts"],"names":[],"mappings":"AASA,OAAO,EAAE,aAAa,EAAE,MAAM,mBAAmB,CAAC;AAElD,qBAAa,aAAa;gBACZ,KAAK,EAAE,aAAa;CAiBjC"}

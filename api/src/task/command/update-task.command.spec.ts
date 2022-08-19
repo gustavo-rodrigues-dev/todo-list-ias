@@ -1,27 +1,29 @@
 import { ValidationError } from 'class-validator';
-import { CreateTaskCommand } from './create-task.command';
+import { UpdateTaskCommand } from './update-task.command';
 import { TaskDTO } from '../task.dto';
 
-describe(CreateTaskCommand.name, () => {
-  describe(`${CreateTaskCommand.name}.constructor()`, () => {
-    it('Should create CreateTaskCommand success', async () => {
+describe(UpdateTaskCommand.name, () => {
+  describe(`${UpdateTaskCommand.name}.constructor()`, () => {
+    it('Should Update UpdateTaskCommand success', async () => {
       const task = new TaskDTO();
+      task.id = 'taskId';
       task.title = 'Hello';
       task.description = 'Hello world!';
-      const target = new CreateTaskCommand(task);
-      expect(target).toBeInstanceOf(CreateTaskCommand);
+      const target = new UpdateTaskCommand(task);
+      expect(target).toBeInstanceOf(UpdateTaskCommand);
       expect(target.task).toEqual(task);
     });
 
-    it('Should create CreateTaskCommand error', async () => {
+    it('Should Update UpdateTaskCommand error', async () => {
       const task = new TaskDTO();
-      let target!: CreateTaskCommand;
+      let target!: UpdateTaskCommand;
       let error!: ValidationError;
+      task.id = 'taskId';
       task.title = 'He';
       task.description = 'He';
 
       try {
-        target = new CreateTaskCommand(task);
+        target = new UpdateTaskCommand(task);
       } catch (err) {
         error = err as ValidationError;
       }

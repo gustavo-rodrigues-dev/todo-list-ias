@@ -11,8 +11,27 @@ export class TaskRepository {
     private taskModel: Model<TaskModel, TaskKey>,
   ) {}
 
-  async create(input: TaskDTO) {
-    const task = { ...input, id: uuidv4() } as TaskModel;
+  async create(input: TaskDTO): Promise<TaskModel> {
+    const task = { done: false, ...input, id: uuidv4() } as TaskModel;
     return await this.taskModel.create(task);
+  }
+
+  async get(id: string): Promise<TaskModel> {
+    return await this.taskModel.get({ id });
+  }
+
+  async findAll(): Promise<TaskModel[]> {
+    return await this.taskModel.scan().exec();
+  }
+
+  async update(task: TaskDTO): Promise<TaskModel> {
+    if (!task.id) {
+      throw new Error('Task id is required');
+    }
+    return await this.taskModel.update({ id: task.id } as TaskKey, task);
+  }
+
+  async delete(id: string): Promise<void> {
+    return await this.taskModel.delete({ id });
   }
 }

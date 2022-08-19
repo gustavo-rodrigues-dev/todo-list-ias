@@ -1,6 +1,9 @@
+const region = process.env.REGION || 'us-east-1';
 export default () => ({
-  region: process.env.REGION || 'us-east-1',
+  region,
   database: {
-    isStub: process.env?.DB_STUB?.toLowerCase() === 'true',
+    endpoint: process.env.AWS_SAM_LOCAL
+      ? 'http://dynamodb:8000'
+      : `https://dynamodb.${region}.amazonaws.com`,
   },
 });
