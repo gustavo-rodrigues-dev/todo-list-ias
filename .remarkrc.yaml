@@ -8,5 +8,6 @@ settings:
   quote: "'"
   quoteSmart: true
   preferUnquoted: true
-  tab-size: space
+  tab-size: one
+  listItemIndent: one
   space: 2
