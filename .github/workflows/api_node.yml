@@ -8,6 +8,8 @@ on:
     branches: [main]
   pull_request:
     branches: [main]
+env:
+  CODACY_PROJECT_TOKEN: ${{ secrets.CODACY_PROJECT_TOKEN }}
 
 jobs:
   build:
@@ -29,5 +31,7 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
       - run: npm ci
-      - run: npm run build
       - run: npm test
+      - run: bash <(curl -Ls https://coverage.codacy.com/get.sh)
+      - run: npm run build
+
