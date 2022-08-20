@@ -1,4 +1,5 @@
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/92522ff9e91842688d38143368ac280d)](https://app.codacy.com/gh/gustavobeavis/todo-list-ias?utm_source=github.com\&utm_medium=referral\&utm_content=gustavobeavis/todo-list-ias\&utm_campaign=Badge_Grade_Settings)
+[![Codacy Badge](https://app.codacy.com/project/badge/Coverage/df3390cf99aa44bfa992d5b0c4dd891c)](https://www.codacy.com/gh/gustavobeavis/todo-list-ias/dashboard?utm_source=github.com\&utm_medium=referral\&utm_content=gustavobeavis/todo-list-ias\&utm_campaign=Badge_Coverage)
 
 ## Summary
 

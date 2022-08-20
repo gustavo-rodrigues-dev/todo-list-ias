@@ -28,6 +28,10 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
+        env:
+         CODACY_PROJECT_TOKEN: ${{ secrets.CODACY_PROJECT_TOKEN }}
       - run: npm ci
       - run: npm run build
       - run: npm test
+      - run: bash <(curl -Ls https://coverage.codacy.com/get.sh)
+
