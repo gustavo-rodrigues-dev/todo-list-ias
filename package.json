@@ -20,7 +20,7 @@
     "@commitlint/cli": "17.0.3",
     "@commitlint/config-angular": "17.0.3",
     "@commitlint/config-conventional": "17.0.3",
-    "@types/node": "16.11.51",
+    "@types/node": "16.11.52",
     "dockerlinter": "1.2.2",
     "husky": "8.0.1",
     "remark": "14.0.2",
