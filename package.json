@@ -14,14 +14,19 @@
     "lint:code": "npm run lint:code:format && npm run lint:code:style",
     "lint:doc": "remark README.md",
     "lint:doc:fix": "remark README.md -o README.md",
-    "lint:docker": "dockerlinter -f ./api/Dockerfile -e warning"
+    "lint:docker": "dockerlinter -f ./api/Dockerfile -e warning",
+    "doc:infra:draw": "cfn-dia a -t ./infrastructure/cdk.out/CdkTaStack.template.json -o ./doc/infra/template.drawio",
+    "doc:infra:img": "drawio ./doc/infra/template.drawio -o ./doc/infra/template.png",
+    "doc:api:img": "tsuml2 --glob \"./api/src/**/!(*.d|*.spec).ts\" --tsconfig \"./api/tsconfig.json\" --typeLinks -m -o ./doc/api/diagram.svg"
   },
   "devDependencies": {
     "@commitlint/cli": "17.0.3",
     "@commitlint/config-angular": "17.0.3",
     "@commitlint/config-conventional": "17.0.3",
+    "@mhlabs/cfn-diagram": "1.1.36",
     "@types/node": "16.11.51",
     "dockerlinter": "1.2.2",
+    "draw.io-export": "0.2.0",
     "husky": "8.0.1",
     "remark": "14.0.2",
     "remark-cli": "11.0.0",
@@ -30,6 +35,7 @@
     "remark-preset-lint-recommended": "6.1.2",
     "remark-stringify": "10.0.2",
     "ts-node": "10.9.1",
+    "tsuml2": "0.6.1",
     "typescript": "4.7.4"
   },
   "dependencies": {

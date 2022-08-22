@@ -1,0 +1,1233 @@
+<svg version="1.1" baseProfile="full" width="8751.5" height="802.0" viewbox="0 0 8751.5 802" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ev="http://www.w3.org/2001/xml-events">
+<desc >#.interface: fill=lightblue
+#.enumeration: fill=lightgreen
+#.type: fill=lightgray
+[AppModule||]
+[TaskController|-commandBus: CommandBus&lt;ICommand&gt;;-queryBus: QueryBus&lt;IQuery&gt;|+createTask(): Promise&lt;any&gt;;+listAllTasks(): Promise&lt;any&gt;;+getTask(): Promise&lt;any&gt;;+updateTask(): Promise&lt;any&gt;;+deleteTask(): Promise&lt;any&gt;]
+[TaskDTO|+id: string \| undefined;+title: string;+description: string;+attachments: \[string\] \| undefined;+createdAt: string \| undefined;+updatedAt: string \| undefined;+done: boolean \| undefined|]
+[&lt;interface&gt;TaskKey|+id: string|]
+[&lt;interface&gt;TaskModel|+title: string;+description: string;+attachments: \[string\];+done: boolean;+createdAt: string;+updatedAt: string \| undefined|]
+[TaskKey]&lt;:--[TaskModel]
+[TaskModule|-event$: EventBus&lt;IEvent&gt;|+onModuleInit(): void]
+[OnModuleInit]&lt;:--[TaskModule]
+[TaskRepository|-taskModel: Model&lt;TaskModel, TaskKey, &quot;&quot;&gt;|+create(): Promise&lt;TaskModel&gt;;+get(): Promise&lt;TaskModel&gt;;+findAll(): Promise&lt;TaskModel\[\]&gt;;+update(): Promise&lt;TaskModel&gt;;+delete(): Promise&lt;void&gt;]
+[CreateTaskCommand|+task: TaskDTO|]
+[CreateTaskCommand]  -  [TaskDTO]
+[CreateTaskHandler|-createTaskService: CreateTaskService;-eventBus: EventBus&lt;IEvent&gt;|+execute(): Promise&lt;TaskDTO&gt;]
+[ICommandHandler&lt;TCommand,TResult&gt;]&lt;:--[CreateTaskHandler]
+[CreateTaskHandler]  -  [CreateTaskService]
+[DeleteTaskCommand|+taskId: string|]
+[DeleteTaskHandler|-deleteTaskService: DeleteTaskService;-eventBus: EventBus&lt;IEvent&gt;|+execute(): Promise&lt;void&gt;]
+[ICommandHandler&lt;TCommand,TResult&gt;]&lt;:--[DeleteTaskHandler]
+[DeleteTaskHandler]  -  [DeleteTaskService]
+[UpdateTaskCommand|+task: TaskDTO|]
+[UpdateTaskCommand]  -  [TaskDTO]
+[UpdateTaskHandler|-updateTaskService: UpdateTaskService;-eventBus: EventBus&lt;IEvent&gt;|+execute(): Promise&lt;TaskDTO&gt;]
+[ICommandHandler&lt;TCommand,TResult&gt;]&lt;:--[UpdateTaskHandler]
+[UpdateTaskHandler]  -  [UpdateTaskService]
+[CreatedTaskFailureEvent|+command: CreateTaskCommand;+error: Error \| Error\[\] \| ValidationError\[\]|]
+[CreatedTaskFailureEvent]  -  [CreateTaskCommand]
+[CreatedTaskFailureHandler||+handle(): void]
+[CreatedTaskSuccessEvent|+command: CreateTaskCommand;+result: TaskDTO|]
+[CreatedTaskSuccessEvent]  -  [CreateTaskCommand]
+[CreatedTaskSuccessEvent]  -  [TaskDTO]
+[CreatedTaskSuccessHandler||+handle(): void]
+[DeletedTaskFailureEvent|+command: DeleteTaskCommand;+error: Error \| Error\[\] \| ValidationError\[\]|]
+[DeletedTaskFailureEvent]  -  [DeleteTaskCommand]
+[DeletedTaskFailureHandler||+handle(): void]
+[DeletedTaskSuccessEvent|+command: DeleteTaskCommand;+result: void|]
+[DeletedTaskSuccessEvent]  -  [DeleteTaskCommand]
+[DeletedTaskSuccessHandler||+handle(): void]
+[GotTaskFailureEvent|+query: GetTaskQuery;+error: Error \| Error\[\] \| ValidationError\[\]|]
+[GotTaskFailureEvent]  -  [GetTaskQuery]
+[GotTaskFailureHandler||+handle(): void]
+[GotTaskSuccessEvent|+query: GetTaskQuery;+result: TaskDTO|]
+[GotTaskSuccessEvent]  -  [GetTaskQuery]
+[GotTaskSuccessEvent]  -  [TaskDTO]
+[GotTaskSuccessHandler||+handle(): void]
+[ListedAllTasksFailureEvent|+query: ListAllTasksQuery;+error: Error \| Error\[\] \| ValidationError\[\]|]
+[ListedAllTasksFailureEvent]  -  [ListAllTasksQuery]
+[ListedAllTasksFailureHandler||+handle(): void]
+[ListedAllTasksSuccessEvent|+query: ListAllTasksQuery;+result: TaskDTO\[\]|]
+[ListedAllTasksSuccessEvent]  -  [ListAllTasksQuery]
+[ListedAllTasksSuccessEvent]  - 0..* [TaskDTO]
+[ListedAllTasksSuccessHandler||+handle(): void]
+[UpdatedTaskFailureEvent|+command: UpdateTaskCommand;+error: Error \| Error\[\] \| ValidationError\[\]|]
+[UpdatedTaskFailureEvent]  -  [UpdateTaskCommand]
+[UpdatedTaskFailureHandler||+handle(): void]
+[UpdatedTaskSuccessEvent|+command: UpdateTaskCommand;+result: TaskDTO|]
+[UpdatedTaskSuccessEvent]  -  [UpdateTaskCommand]
+[UpdatedTaskSuccessEvent]  -  [TaskDTO]
+[UpdatedTaskSuccessHandler||+handle(): void]
+[GetTaskHandler|-getTaskService: GetTaskService;-eventBus: EventBus&lt;IEvent&gt;|+execute(): Promise&lt;TaskDTO&gt;]
+[IQueryHandler&lt;T,TRes&gt;]&lt;:--[GetTaskHandler]
+[GetTaskHandler]  -  [GetTaskService]
+[GetTaskQuery|+taskId: string|]
+[ListAllTasksHandler|-listAllService: ListAllTasksService;-eventBus: EventBus&lt;IEvent&gt;|+execute(): Promise&lt;TaskDTO\[\]&gt;]
+[IQueryHandler&lt;T,TRes&gt;]&lt;:--[ListAllTasksHandler]
+[ListAllTasksHandler]  -  [ListAllTasksService]
+[ListAllTasksQuery||]
+[CreateTaskService|-taskRepository: TaskRepository|+create(): Promise&lt;TaskDTO&gt;]
+[CreateTaskService]  -  [TaskRepository]
+[DeleteTaskService|-taskRepository: TaskRepository|+delete(): Promise&lt;void&gt;]
+[DeleteTaskService]  -  [TaskRepository]
+[GetTaskService|-taskRepository: TaskRepository|+get(): Promise&lt;TaskModel&gt;]
+[GetTaskService]  -  [TaskRepository]
+[ListAllTasksService|-taskRepository: TaskRepository|+get(): Promise&lt;TaskModel\[\]&gt;]
+[ListAllTasksService]  -  [TaskRepository]
+[UpdateTaskService|-taskRepository: TaskRepository|+update(): Promise&lt;TaskDTO&gt;]
+[UpdateTaskService]  -  [TaskRepository]</desc>
+<g stroke-width="1.0" text-align="left" font="12pt Helvetica, Arial, sans-serif" font-size="12pt" font-family="Helvetica" font-weight="bold" font-style="normal">
+<g transform="translate(0.5, 0.5)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" stroke-width="3.0" stroke-linejoin="round" stroke-linecap="round" stroke="#33322E">
+<g stroke="transparent" fill="transparent">
+<rect x="0.0" y="0.0" height="802.0" width="8751.5" stroke="none"></rect>
+</g>
+<g transform="translate(8, 8)" fill="#33322E">
+<g transform="translate(20, 20)" fill="#33322E" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal">
+<g stroke-dasharray="6 6">
+<path d="M586.0 132.3 L586 188 L586 208 L586.0 208.0 " fill="none"></path>
+</g>
+<path d="M591.3 132.3 L586.0 132.3 L580.7 132.3 L586.0 119.0 Z"></path>
+<g stroke-dasharray="6 6">
+<path d="M869.0 112.8 L869 188 L869 234 L869.0 234.0 " fill="none"></path>
+</g>
+<path d="M874.3 112.8 L869.0 112.8 L863.7 112.8 L869.0 99.5 Z"></path>
+<path d="M5021.0 315.5 L5021 373 L5005.25 393 L5005.3 393.0 " fill="none"></path>
+<g stroke-dasharray="6 6">
+<path d="M8231.1 103.1 L8531 188 L8531 226.5 L8531.0 226.5 " fill="none"></path>
+</g>
+<path d="M8232.6 98.0 L8231.1 103.1 L8229.6 108.3 L8218.3 99.5 Z"></path>
+<path d="M8531.0 334.5 L8531 373 L8531 426.5 L8531.0 426.5 " fill="none"></path>
+<g stroke-dasharray="6 6">
+<path d="M8163.5 112.8 L8163.5 188 L8163.5 226.5 L8163.5 226.5 " fill="none"></path>
+</g>
+<path d="M8168.8 112.8 L8163.5 112.8 L8158.2 112.8 L8163.5 99.5 Z"></path>
+<path d="M8163.5 334.5 L8163.5 373 L8163.5 426.5 L8163.5 426.5 " fill="none"></path>
+<path d="M2186.8 315.5 L2186.75 373 L4801.75 467.9011068771548 L4801.8 467.9 " fill="none"></path>
+<g stroke-dasharray="6 6">
+<path d="M8095.2 103.1 L7791.5 188 L7791.5 226.5 L7791.5 226.5 " fill="none"></path>
+</g>
+<path d="M8096.7 108.2 L8095.2 103.1 L8093.8 98.0 L8108.1 99.5 Z"></path>
+<path d="M7791.5 334.5 L7791.5 373 L7791.5 426.5 L7791.5 426.5 " fill="none"></path>
+<path d="M5576.0 126.5 L5576 188 L5114.5 264.9166666666667 L5114.5 264.9 " fill="none"></path>
+<path d="M4426.7 126.5 L4597.75 188 L4927.5 260.0658594211459 L4927.5 260.1 " fill="none"></path>
+<path d="M4166.5 101.8 L3478.75 188 L3478.75 280.5 L3478.75 280.5 L3478.75 373 L3478.75 373 L4801.75 463.3997266826102 L4801.8 463.4 " fill="none"></path>
+<path d="M2609.0 126.5 L2609 188 L1963 268.91401489505756 L1963.0 268.9 " fill="none"></path>
+<path d="M1997.5 126.5 L1997.5 188 L1918.554054054054 245.5 L1918.6 245.5 " fill="none"></path>
+<path d="M6228.0 323.0 L6228 373 L6324.525 438 L6324.5 438.0 " fill="none"></path>
+<path d="M6584.0 323.0 L6653.5 373 L6441.5 449.5342960288809 L6441.5 449.5 " fill="none"></path>
+<path d="M6466.0 323.0 L6396.5 373 L5082.75 463.3386625408286 L5082.8 463.3 " fill="none"></path>
+<path d="M6822.0 323.0 L6822 373 L6944.59125 449.5 L6944.6 449.5 " fill="none"></path>
+<path d="M7202.3 323.0 L7272.75 373 L7050.5175 449.5 L7050.5 449.5 " fill="none"></path>
+<text x="5047.8" y="458.2" stroke="none">0..*</text>
+<path d="M7078.1 323.0 L7002.25 373 L5082.75 466.1796116504854 L5082.8 466.2 " fill="none"></path>
+<path d="M4927.0 126.5 L4927 188 L2282.25 277.276297783049 L2282.3 277.3 " fill="none"></path>
+<path d="M1503.2 126.5 L1672 188 L2091.25 263.338756677999 L2091.3 263.3 " fill="none"></path>
+<path d="M1312.5 126.5 L1205.5 188 L1205.5 280.5 L1205.5 280.5 L1205.5 373 L1205.5 373 L4801.75 469.24004817020136 L4801.8 469.2 " fill="none"></path>
+<g stroke-dasharray="6 6">
+<path d="M6781.2 99.6 L7443 188 L7443 226.5 L7443.0 226.5 " fill="none"></path>
+</g>
+<path d="M6781.9 94.3 L6781.2 99.6 L6780.5 104.9 L6768.0 97.8 Z"></path>
+<path d="M7443.0 334.5 L7443 373 L7443 426.5 L7443.0 426.5 " fill="none"></path>
+<g stroke-dasharray="6 6">
+<path d="M6547.8 99.6 L5886 188 L5886 226.5 L5886.0 226.5 " fill="none"></path>
+</g>
+<path d="M6548.5 104.9 L6547.8 99.6 L6547.1 94.3 L6561.0 97.8 Z"></path>
+<path d="M5886.0 334.5 L5886 373 L5886 426.5 L5886.0 426.5 " fill="none"></path>
+<path d="M8531.0 519.5 L8531 573 L7975 645.5544286680189 L7975.0 645.6 " fill="none"></path>
+<path d="M8163.5 519.5 L8163.5 573 L7975 621.8985215053764 L7975.0 621.9 " fill="none"></path>
+<path d="M7443.0 519.5 L7443 573 L7608 618.6886657101866 L7608.0 618.7 " fill="none"></path>
+<path d="M5886.0 519.5 L5886 573 L7608 660.2070322749935 L7608.0 660.2 " fill="none"></path>
+<path d="M7791.5 519.5 L7791.5 573 L7791.5 593 L7791.5 593.0 " fill="none"></path>
+<g data-name="AppModule">
+<g fill="#eee8d5" stroke="#33322E" data-name="AppModule">
+<rect x="0.0" y="61.0" height="47.0" width="105.0" data-name="AppModule"></rect>
+<path d="M0.0 92.0 L105.0 92.0" fill="none" data-name="AppModule"></path>
+<path d="M0.0 100.0 L105.0 100.0" fill="none" data-name="AppModule"></path>
+</g>
+<g transform="translate(0, 61)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="AppModule">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="AppModule">
+<a id="../../api/src/app.module.ts.AppModule" xlink:href="../../api/src/app.module.ts"><text x="44.5" y="13.5" stroke="none" text-anchor="middle" data-name="AppModule">AppModule</text></a>
+
+</g>
+</g>
+<g transform="translate(0, 92)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="AppModule">
+<g transform="translate(8, 8)" fill="#33322E" data-name="AppModule">
+
+</g>
+</g>
+<g transform="translate(0, 100)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="AppModule">
+<g transform="translate(8, 8)" fill="#33322E" data-name="AppModule">
+
+</g>
+</g>
+</g>
+<g data-name="TaskController">
+<g fill="#eee8d5" stroke="#33322E" data-name="TaskController">
+<rect x="145.0" y="0.0" height="168.0" width="354.0" data-name="TaskController"></rect>
+<path d="M145.0 31.0 L499.0 31.0" fill="none" data-name="TaskController"></path>
+<path d="M145.0 77.0 L499.0 77.0" fill="none" data-name="TaskController"></path>
+</g>
+<g transform="translate(145, 0)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="TaskController">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="TaskController">
+<a id="../../api/src/task/task.controller.ts.TaskController" xlink:href="../../api/src/task/task.controller.ts"><text x="169.0" y="13.5" stroke="none" text-anchor="middle" data-name="TaskController">TaskController</text></a>
+
+</g>
+</g>
+<g transform="translate(145, 31)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="TaskController">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="TaskController">
+<text x="0.0" y="13.5" stroke="none" data-name="TaskController">-commandBus: CommandBus&lt;ICommand&gt;</text>
+<text x="0.0" y="28.5" stroke="none" data-name="TaskController">-queryBus: QueryBus&lt;IQuery&gt;</text>
+
+</g>
+</g>
+<g transform="translate(145, 77)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="TaskController">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="TaskController">
+<text x="0.0" y="13.5" stroke="none" data-name="TaskController">+createTask(): Promise&lt;any&gt;</text>
+<text x="0.0" y="28.5" stroke="none" data-name="TaskController">+listAllTasks(): Promise&lt;any&gt;</text>
+<text x="0.0" y="43.5" stroke="none" data-name="TaskController">+getTask(): Promise&lt;any&gt;</text>
+<text x="0.0" y="58.5" stroke="none" data-name="TaskController">+updateTask(): Promise&lt;any&gt;</text>
+<text x="0.0" y="73.5" stroke="none" data-name="TaskController">+deleteTask(): Promise&lt;any&gt;</text>
+
+</g>
+</g>
+</g>
+<g data-name="TaskDTO">
+<g fill="#eee8d5" stroke="#33322E" data-name="TaskDTO">
+<rect x="4802.0" y="393.0" height="160.0" width="281.0" data-name="TaskDTO"></rect>
+<path d="M4802.0 424.0 L5083.0 424.0" fill="none" data-name="TaskDTO"></path>
+<path d="M4802.0 545.0 L5083.0 545.0" fill="none" data-name="TaskDTO"></path>
+</g>
+<g transform="translate(4802, 393)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="TaskDTO">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="TaskDTO">
+<a id="../../api/src/task/task.dto.ts.TaskDTO" xlink:href="../../api/src/task/task.dto.ts"><text x="132.5" y="13.5" stroke="none" text-anchor="middle" data-name="TaskDTO">TaskDTO</text></a>
+
+</g>
+</g>
+<g transform="translate(4802, 424)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="TaskDTO">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="TaskDTO">
+<text x="0.0" y="13.5" stroke="none" data-name="TaskDTO">+id: string | undefined</text>
+<text x="0.0" y="28.5" stroke="none" data-name="TaskDTO">+title: string</text>
+<text x="0.0" y="43.5" stroke="none" data-name="TaskDTO">+description: string</text>
+<text x="0.0" y="58.5" stroke="none" data-name="TaskDTO">+attachments: [string] | undefined</text>
+<text x="0.0" y="73.5" stroke="none" data-name="TaskDTO">+createdAt: string | undefined</text>
+<text x="0.0" y="88.5" stroke="none" data-name="TaskDTO">+updatedAt: string | undefined</text>
+<text x="0.0" y="103.5" stroke="none" data-name="TaskDTO">+done: boolean | undefined</text>
+
+</g>
+</g>
+<g transform="translate(4802, 545)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="TaskDTO">
+<g transform="translate(8, 8)" fill="#33322E" data-name="TaskDTO">
+
+</g>
+</g>
+</g>
+<g data-name="TaskKey">
+<g fill="lightblue" stroke="#33322E" data-name="TaskKey">
+<rect x="539.0" y="49.0" height="70.0" width="94.0" data-name="TaskKey"></rect>
+<path d="M539.0 80.0 L633.0 80.0" fill="none" data-name="TaskKey"></path>
+<path d="M539.0 111.0 L633.0 111.0" fill="none" data-name="TaskKey"></path>
+</g>
+<g transform="translate(539, 49)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="TaskKey">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="TaskKey">
+<a id="../../api/src/task/task.model.ts.TaskKey" xlink:href="../../api/src/task/task.model.ts"><text x="39.0" y="13.5" stroke="none" text-anchor="middle" data-name="TaskKey">TaskKey</text></a>
+
+</g>
+</g>
+<g transform="translate(539, 80)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="TaskKey">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="TaskKey">
+<text x="0.0" y="13.5" stroke="none" data-name="TaskKey">+id: string</text>
+
+</g>
+</g>
+<g transform="translate(539, 111)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="TaskKey">
+<g transform="translate(8, 8)" fill="#33322E" data-name="TaskKey">
+
+</g>
+</g>
+</g>
+<g data-name="TaskModel">
+<g fill="lightblue" stroke="#33322E" data-name="TaskModel">
+<rect x="459.0" y="208.0" height="145.0" width="255.0" data-name="TaskModel"></rect>
+<path d="M459.0 239.0 L714.0 239.0" fill="none" data-name="TaskModel"></path>
+<path d="M459.0 345.0 L714.0 345.0" fill="none" data-name="TaskModel"></path>
+</g>
+<g transform="translate(459, 208)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="TaskModel">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="TaskModel">
+<a id="../../api/src/task/task.model.ts.TaskModel" xlink:href="../../api/src/task/task.model.ts"><text x="119.5" y="13.5" stroke="none" text-anchor="middle" data-name="TaskModel">TaskModel</text></a>
+
+</g>
+</g>
+<g transform="translate(459, 239)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="TaskModel">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="TaskModel">
+<text x="0.0" y="13.5" stroke="none" data-name="TaskModel">+title: string</text>
+<text x="0.0" y="28.5" stroke="none" data-name="TaskModel">+description: string</text>
+<text x="0.0" y="43.5" stroke="none" data-name="TaskModel">+attachments: [string]</text>
+<text x="0.0" y="58.5" stroke="none" data-name="TaskModel">+done: boolean</text>
+<text x="0.0" y="73.5" stroke="none" data-name="TaskModel">+createdAt: string</text>
+<text x="0.0" y="88.5" stroke="none" data-name="TaskModel">+updatedAt: string | undefined</text>
+
+</g>
+</g>
+<g transform="translate(459, 345)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="TaskModel">
+<g transform="translate(8, 8)" fill="#33322E" data-name="TaskModel">
+
+</g>
+</g>
+</g>
+<g data-name="TaskModule">
+<g fill="#eee8d5" stroke="#33322E" data-name="TaskModule">
+<rect x="754.0" y="234.0" height="93.0" width="231.0" data-name="TaskModule"></rect>
+<path d="M754.0 265.0 L985.0 265.0" fill="none" data-name="TaskModule"></path>
+<path d="M754.0 296.0 L985.0 296.0" fill="none" data-name="TaskModule"></path>
+</g>
+<g transform="translate(754, 234)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="TaskModule">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="TaskModule">
+<a id="../../api/src/task/task.module.ts.TaskModule" xlink:href="../../api/src/task/task.module.ts"><text x="107.5" y="13.5" stroke="none" text-anchor="middle" data-name="TaskModule">TaskModule</text></a>
+
+</g>
+</g>
+<g transform="translate(754, 265)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="TaskModule">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="TaskModule">
+<text x="0.0" y="13.5" stroke="none" data-name="TaskModule">-event$: EventBus&lt;IEvent&gt;</text>
+
+</g>
+</g>
+<g transform="translate(754, 296)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="TaskModule">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="TaskModule">
+<text x="0.0" y="13.5" stroke="none" data-name="TaskModule">+onModuleInit(): void</text>
+
+</g>
+</g>
+</g>
+<g data-name="TaskRepository">
+<g fill="#eee8d5" stroke="#33322E" data-name="TaskRepository">
+<rect x="7608.0" y="593.0" height="153.0" width="367.0" data-name="TaskRepository"></rect>
+<path d="M7608.0 624.0 L7975.0 624.0" fill="none" data-name="TaskRepository"></path>
+<path d="M7608.0 655.0 L7975.0 655.0" fill="none" data-name="TaskRepository"></path>
+</g>
+<g transform="translate(7608, 593)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="TaskRepository">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="TaskRepository">
+<a id="../../api/src/task/task.repository.ts.TaskRepository" xlink:href="../../api/src/task/task.repository.ts"><text x="175.5" y="13.5" stroke="none" text-anchor="middle" data-name="TaskRepository">TaskRepository</text></a>
+
+</g>
+</g>
+<g transform="translate(7608, 624)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="TaskRepository">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="TaskRepository">
+<text x="0.0" y="13.5" stroke="none" data-name="TaskRepository">-taskModel: Model&lt;TaskModel, TaskKey, &quot;&quot;&gt;</text>
+
+</g>
+</g>
+<g transform="translate(7608, 655)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="TaskRepository">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="TaskRepository">
+<text x="0.0" y="13.5" stroke="none" data-name="TaskRepository">+create(): Promise&lt;TaskModel&gt;</text>
+<text x="0.0" y="28.5" stroke="none" data-name="TaskRepository">+get(): Promise&lt;TaskModel&gt;</text>
+<text x="0.0" y="43.5" stroke="none" data-name="TaskRepository">+findAll(): Promise&lt;TaskModel[]&gt;</text>
+<text x="0.0" y="58.5" stroke="none" data-name="TaskRepository">+update(): Promise&lt;TaskModel&gt;</text>
+<text x="0.0" y="73.5" stroke="none" data-name="TaskRepository">+delete(): Promise&lt;void&gt;</text>
+
+</g>
+</g>
+</g>
+<g data-name="CreateTaskCommand">
+<g fill="#eee8d5" stroke="#33322E" data-name="CreateTaskCommand">
+<rect x="4928.0" y="246.0" height="70.0" width="187.0" data-name="CreateTaskCommand"></rect>
+<path d="M4928.0 277.0 L5115.0 277.0" fill="none" data-name="CreateTaskCommand"></path>
+<path d="M4928.0 308.0 L5115.0 308.0" fill="none" data-name="CreateTaskCommand"></path>
+</g>
+<g transform="translate(4928, 246)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="CreateTaskCommand">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="CreateTaskCommand">
+<a id="../../api/src/task/command/create-task.command.ts.CreateTaskCommand" xlink:href="../../api/src/task/command/create-task.command.ts"><text x="85.5" y="13.5" stroke="none" text-anchor="middle" data-name="CreateTaskCommand">CreateTaskCommand</text></a>
+
+</g>
+</g>
+<g transform="translate(4928, 277)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="CreateTaskCommand">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="CreateTaskCommand">
+<text x="0.0" y="13.5" stroke="none" data-name="CreateTaskCommand">+task: TaskDTO</text>
+
+</g>
+</g>
+<g transform="translate(4928, 308)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="CreateTaskCommand">
+<g transform="translate(8, 8)" fill="#33322E" data-name="CreateTaskCommand">
+
+</g>
+</g>
+</g>
+<g data-name="CreateTaskHandler">
+<g fill="#eee8d5" stroke="#33322E" data-name="CreateTaskHandler">
+<rect x="8367.0" y="227.0" height="108.0" width="329.0" data-name="CreateTaskHandler"></rect>
+<path d="M8367.0 258.0 L8696.0 258.0" fill="none" data-name="CreateTaskHandler"></path>
+<path d="M8367.0 304.0 L8696.0 304.0" fill="none" data-name="CreateTaskHandler"></path>
+</g>
+<g transform="translate(8367, 227)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="CreateTaskHandler">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="CreateTaskHandler">
+<a id="../../api/src/task/command/create-task.handler.ts.CreateTaskHandler" xlink:href="../../api/src/task/command/create-task.handler.ts"><text x="156.5" y="13.5" stroke="none" text-anchor="middle" data-name="CreateTaskHandler">CreateTaskHandler</text></a>
+
+</g>
+</g>
+<g transform="translate(8367, 258)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="CreateTaskHandler">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="CreateTaskHandler">
+<text x="0.0" y="13.5" stroke="none" data-name="CreateTaskHandler">-createTaskService: CreateTaskService</text>
+<text x="0.0" y="28.5" stroke="none" data-name="CreateTaskHandler">-eventBus: EventBus&lt;IEvent&gt;</text>
+
+</g>
+</g>
+<g transform="translate(8367, 304)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="CreateTaskHandler">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="CreateTaskHandler">
+<text x="0.0" y="13.5" stroke="none" data-name="CreateTaskHandler">+execute(): Promise&lt;TaskDTO&gt;</text>
+
+</g>
+</g>
+</g>
+<g data-name="DeleteTaskCommand">
+<g fill="#eee8d5" stroke="#33322E" data-name="DeleteTaskCommand">
+<rect x="1778.0" y="246.0" height="70.0" width="185.0" data-name="DeleteTaskCommand"></rect>
+<path d="M1778.0 277.0 L1963.0 277.0" fill="none" data-name="DeleteTaskCommand"></path>
+<path d="M1778.0 308.0 L1963.0 308.0" fill="none" data-name="DeleteTaskCommand"></path>
+</g>
+<g transform="translate(1778, 246)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="DeleteTaskCommand">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="DeleteTaskCommand">
+<a id="../../api/src/task/command/delete-task.command.ts.DeleteTaskCommand" xlink:href="../../api/src/task/command/delete-task.command.ts"><text x="84.5" y="13.5" stroke="none" text-anchor="middle" data-name="DeleteTaskCommand">DeleteTaskCommand</text></a>
+
+</g>
+</g>
+<g transform="translate(1778, 277)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="DeleteTaskCommand">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="DeleteTaskCommand">
+<text x="0.0" y="13.5" stroke="none" data-name="DeleteTaskCommand">+taskId: string</text>
+
+</g>
+</g>
+<g transform="translate(1778, 308)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="DeleteTaskCommand">
+<g transform="translate(8, 8)" fill="#33322E" data-name="DeleteTaskCommand">
+
+</g>
+</g>
+</g>
+<g data-name="DeleteTaskHandler">
+<g fill="#eee8d5" stroke="#33322E" data-name="DeleteTaskHandler">
+<rect x="8001.0" y="227.0" height="108.0" width="326.0" data-name="DeleteTaskHandler"></rect>
+<path d="M8001.0 258.0 L8327.0 258.0" fill="none" data-name="DeleteTaskHandler"></path>
+<path d="M8001.0 304.0 L8327.0 304.0" fill="none" data-name="DeleteTaskHandler"></path>
+</g>
+<g transform="translate(8001, 227)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="DeleteTaskHandler">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="DeleteTaskHandler">
+<a id="../../api/src/task/command/delete-task.handler.ts.DeleteTaskHandler" xlink:href="../../api/src/task/command/delete-task.handler.ts"><text x="155.0" y="13.5" stroke="none" text-anchor="middle" data-name="DeleteTaskHandler">DeleteTaskHandler</text></a>
+
+</g>
+</g>
+<g transform="translate(8001, 258)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="DeleteTaskHandler">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="DeleteTaskHandler">
+<text x="0.0" y="13.5" stroke="none" data-name="DeleteTaskHandler">-deleteTaskService: DeleteTaskService</text>
+<text x="0.0" y="28.5" stroke="none" data-name="DeleteTaskHandler">-eventBus: EventBus&lt;IEvent&gt;</text>
+
+</g>
+</g>
+<g transform="translate(8001, 304)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="DeleteTaskHandler">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="DeleteTaskHandler">
+<text x="0.0" y="13.5" stroke="none" data-name="DeleteTaskHandler">+execute(): Promise&lt;void&gt;</text>
+
+</g>
+</g>
+</g>
+<g data-name="UpdateTaskCommand">
+<g fill="#eee8d5" stroke="#33322E" data-name="UpdateTaskCommand">
+<rect x="2091.0" y="246.0" height="70.0" width="191.0" data-name="UpdateTaskCommand"></rect>
+<path d="M2091.0 277.0 L2282.0 277.0" fill="none" data-name="UpdateTaskCommand"></path>
+<path d="M2091.0 308.0 L2282.0 308.0" fill="none" data-name="UpdateTaskCommand"></path>
+</g>
+<g transform="translate(2091, 246)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="UpdateTaskCommand">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="UpdateTaskCommand">
+<a id="../../api/src/task/command/update-task.command.ts.UpdateTaskCommand" xlink:href="../../api/src/task/command/update-task.command.ts"><text x="87.5" y="13.5" stroke="none" text-anchor="middle" data-name="UpdateTaskCommand">UpdateTaskCommand</text></a>
+
+</g>
+</g>
+<g transform="translate(2091, 277)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="UpdateTaskCommand">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="UpdateTaskCommand">
+<text x="0.0" y="13.5" stroke="none" data-name="UpdateTaskCommand">+task: TaskDTO</text>
+
+</g>
+</g>
+<g transform="translate(2091, 308)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="UpdateTaskCommand">
+<g transform="translate(8, 8)" fill="#33322E" data-name="UpdateTaskCommand">
+
+</g>
+</g>
+</g>
+<g data-name="UpdateTaskHandler">
+<g fill="#eee8d5" stroke="#33322E" data-name="UpdateTaskHandler">
+<rect x="7623.0" y="227.0" height="108.0" width="338.0" data-name="UpdateTaskHandler"></rect>
+<path d="M7623.0 258.0 L7961.0 258.0" fill="none" data-name="UpdateTaskHandler"></path>
+<path d="M7623.0 304.0 L7961.0 304.0" fill="none" data-name="UpdateTaskHandler"></path>
+</g>
+<g transform="translate(7623, 227)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="UpdateTaskHandler">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="UpdateTaskHandler">
+<a id="../../api/src/task/command/update-task.handler.ts.UpdateTaskHandler" xlink:href="../../api/src/task/command/update-task.handler.ts"><text x="161.0" y="13.5" stroke="none" text-anchor="middle" data-name="UpdateTaskHandler">UpdateTaskHandler</text></a>
+
+</g>
+</g>
+<g transform="translate(7623, 258)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="UpdateTaskHandler">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="UpdateTaskHandler">
+<text x="0.0" y="13.5" stroke="none" data-name="UpdateTaskHandler">-updateTaskService: UpdateTaskService</text>
+<text x="0.0" y="28.5" stroke="none" data-name="UpdateTaskHandler">-eventBus: EventBus&lt;IEvent&gt;</text>
+
+</g>
+</g>
+<g transform="translate(7623, 304)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="UpdateTaskHandler">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="UpdateTaskHandler">
+<text x="0.0" y="13.5" stroke="none" data-name="UpdateTaskHandler">+execute(): Promise&lt;TaskDTO&gt;</text>
+
+</g>
+</g>
+</g>
+<g data-name="CreatedTaskFailureEvent">
+<g fill="#eee8d5" stroke="#33322E" data-name="CreatedTaskFailureEvent">
+<rect x="5417.0" y="42.0" height="85.0" width="319.0" data-name="CreatedTaskFailureEvent"></rect>
+<path d="M5417.0 73.0 L5736.0 73.0" fill="none" data-name="CreatedTaskFailureEvent"></path>
+<path d="M5417.0 119.0 L5736.0 119.0" fill="none" data-name="CreatedTaskFailureEvent"></path>
+</g>
+<g transform="translate(5417, 42)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="CreatedTaskFailureEvent">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="CreatedTaskFailureEvent">
+<a id="../../api/src/task/event/created-task-failure.event.ts.CreatedTaskFailureEvent" xlink:href="../../api/src/task/event/created-task-failure.event.ts"><text x="151.5" y="13.5" stroke="none" text-anchor="middle" data-name="CreatedTaskFailureEvent">CreatedTaskFailureEvent</text></a>
+
+</g>
+</g>
+<g transform="translate(5417, 73)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="CreatedTaskFailureEvent">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="CreatedTaskFailureEvent">
+<text x="0.0" y="13.5" stroke="none" data-name="CreatedTaskFailureEvent">+command: CreateTaskCommand</text>
+<text x="0.0" y="28.5" stroke="none" data-name="CreatedTaskFailureEvent">+error: Error | Error[] | ValidationError[]</text>
+
+</g>
+</g>
+<g transform="translate(5417, 119)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="CreatedTaskFailureEvent">
+<g transform="translate(8, 8)" fill="#33322E" data-name="CreatedTaskFailureEvent">
+
+</g>
+</g>
+</g>
+<g data-name="CreatedTaskFailureHandler">
+<g fill="#eee8d5" stroke="#33322E" data-name="CreatedTaskFailureHandler">
+<rect x="970.0" y="49.0" height="70.0" width="233.0" data-name="CreatedTaskFailureHandler"></rect>
+<path d="M970.0 80.0 L1203.0 80.0" fill="none" data-name="CreatedTaskFailureHandler"></path>
+<path d="M970.0 88.0 L1203.0 88.0" fill="none" data-name="CreatedTaskFailureHandler"></path>
+</g>
+<g transform="translate(970, 49)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="CreatedTaskFailureHandler">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="CreatedTaskFailureHandler">
+<a id="../../api/src/task/event/created-task-failure.handler.ts.CreatedTaskFailureHandler" xlink:href="../../api/src/task/event/created-task-failure.handler.ts"><text x="108.5" y="13.5" stroke="none" text-anchor="middle" data-name="CreatedTaskFailureHandler">CreatedTaskFailureHandler</text></a>
+
+</g>
+</g>
+<g transform="translate(970, 80)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="CreatedTaskFailureHandler">
+<g transform="translate(8, 8)" fill="#33322E" data-name="CreatedTaskFailureHandler">
+
+</g>
+</g>
+<g transform="translate(970, 88)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="CreatedTaskFailureHandler">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="CreatedTaskFailureHandler">
+<text x="0.0" y="13.5" stroke="none" data-name="CreatedTaskFailureHandler">+handle(): void</text>
+
+</g>
+</g>
+</g>
+<g data-name="CreatedTaskSuccessEvent">
+<g fill="#eee8d5" stroke="#33322E" data-name="CreatedTaskSuccessEvent">
+<rect x="4167.0" y="42.0" height="85.0" width="284.0" data-name="CreatedTaskSuccessEvent"></rect>
+<path d="M4167.0 73.0 L4451.0 73.0" fill="none" data-name="CreatedTaskSuccessEvent"></path>
+<path d="M4167.0 119.0 L4451.0 119.0" fill="none" data-name="CreatedTaskSuccessEvent"></path>
+</g>
+<g transform="translate(4167, 42)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="CreatedTaskSuccessEvent">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="CreatedTaskSuccessEvent">
+<a id="../../api/src/task/event/created-task-success.event.ts.CreatedTaskSuccessEvent" xlink:href="../../api/src/task/event/created-task-success.event.ts"><text x="134.0" y="13.5" stroke="none" text-anchor="middle" data-name="CreatedTaskSuccessEvent">CreatedTaskSuccessEvent</text></a>
+
+</g>
+</g>
+<g transform="translate(4167, 73)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="CreatedTaskSuccessEvent">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="CreatedTaskSuccessEvent">
+<text x="0.0" y="13.5" stroke="none" data-name="CreatedTaskSuccessEvent">+command: CreateTaskCommand</text>
+<text x="0.0" y="28.5" stroke="none" data-name="CreatedTaskSuccessEvent">+result: TaskDTO</text>
+
+</g>
+</g>
+<g transform="translate(4167, 119)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="CreatedTaskSuccessEvent">
+<g transform="translate(8, 8)" fill="#33322E" data-name="CreatedTaskSuccessEvent">
+
+</g>
+</g>
+</g>
+<g data-name="CreatedTaskSuccessHandler">
+<g fill="#eee8d5" stroke="#33322E" data-name="CreatedTaskSuccessHandler">
+<rect x="1571.0" y="49.0" height="70.0" width="246.0" data-name="CreatedTaskSuccessHandler"></rect>
+<path d="M1571.0 80.0 L1817.0 80.0" fill="none" data-name="CreatedTaskSuccessHandler"></path>
+<path d="M1571.0 88.0 L1817.0 88.0" fill="none" data-name="CreatedTaskSuccessHandler"></path>
+</g>
+<g transform="translate(1571, 49)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="CreatedTaskSuccessHandler">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="CreatedTaskSuccessHandler">
+<a id="../../api/src/task/event/created-task-success.handler.ts.CreatedTaskSuccessHandler" xlink:href="../../api/src/task/event/created-task-success.handler.ts"><text x="115.0" y="13.5" stroke="none" text-anchor="middle" data-name="CreatedTaskSuccessHandler">CreatedTaskSuccessHandler</text></a>
+
+</g>
+</g>
+<g transform="translate(1571, 80)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="CreatedTaskSuccessHandler">
+<g transform="translate(8, 8)" fill="#33322E" data-name="CreatedTaskSuccessHandler">
+
+</g>
+</g>
+<g transform="translate(1571, 88)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="CreatedTaskSuccessHandler">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="CreatedTaskSuccessHandler">
+<text x="0.0" y="13.5" stroke="none" data-name="CreatedTaskSuccessHandler">+handle(): void</text>
+
+</g>
+</g>
+</g>
+<g data-name="DeletedTaskFailureEvent">
+<g fill="#eee8d5" stroke="#33322E" data-name="DeletedTaskFailureEvent">
+<rect x="2450.0" y="42.0" height="85.0" width="319.0" data-name="DeletedTaskFailureEvent"></rect>
+<path d="M2450.0 73.0 L2769.0 73.0" fill="none" data-name="DeletedTaskFailureEvent"></path>
+<path d="M2450.0 119.0 L2769.0 119.0" fill="none" data-name="DeletedTaskFailureEvent"></path>
+</g>
+<g transform="translate(2450, 42)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="DeletedTaskFailureEvent">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="DeletedTaskFailureEvent">
+<a id="../../api/src/task/event/deleted-task-failure.event.ts.DeletedTaskFailureEvent" xlink:href="../../api/src/task/event/deleted-task-failure.event.ts"><text x="151.5" y="13.5" stroke="none" text-anchor="middle" data-name="DeletedTaskFailureEvent">DeletedTaskFailureEvent</text></a>
+
+</g>
+</g>
+<g transform="translate(2450, 73)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="DeletedTaskFailureEvent">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="DeletedTaskFailureEvent">
+<text x="0.0" y="13.5" stroke="none" data-name="DeletedTaskFailureEvent">+command: DeleteTaskCommand</text>
+<text x="0.0" y="28.5" stroke="none" data-name="DeletedTaskFailureEvent">+error: Error | Error[] | ValidationError[]</text>
+
+</g>
+</g>
+<g transform="translate(2450, 119)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="DeletedTaskFailureEvent">
+<g transform="translate(8, 8)" fill="#33322E" data-name="DeletedTaskFailureEvent">
+
+</g>
+</g>
+</g>
+<g data-name="DeletedTaskFailureHandler">
+<g fill="#eee8d5" stroke="#33322E" data-name="DeletedTaskFailureHandler">
+<rect x="2179.0" y="49.0" height="70.0" width="231.0" data-name="DeletedTaskFailureHandler"></rect>
+<path d="M2179.0 80.0 L2410.0 80.0" fill="none" data-name="DeletedTaskFailureHandler"></path>
+<path d="M2179.0 88.0 L2410.0 88.0" fill="none" data-name="DeletedTaskFailureHandler"></path>
+</g>
+<g transform="translate(2179, 49)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="DeletedTaskFailureHandler">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="DeletedTaskFailureHandler">
+<a id="../../api/src/task/event/deleted-task-failure.handler.ts.DeletedTaskFailureHandler" xlink:href="../../api/src/task/event/deleted-task-failure.handler.ts"><text x="107.5" y="13.5" stroke="none" text-anchor="middle" data-name="DeletedTaskFailureHandler">DeletedTaskFailureHandler</text></a>
+
+</g>
+</g>
+<g transform="translate(2179, 80)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="DeletedTaskFailureHandler">
+<g transform="translate(8, 8)" fill="#33322E" data-name="DeletedTaskFailureHandler">
+
+</g>
+</g>
+<g transform="translate(2179, 88)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="DeletedTaskFailureHandler">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="DeletedTaskFailureHandler">
+<text x="0.0" y="13.5" stroke="none" data-name="DeletedTaskFailureHandler">+handle(): void</text>
+
+</g>
+</g>
+</g>
+<g data-name="DeletedTaskSuccessEvent">
+<g fill="#eee8d5" stroke="#33322E" data-name="DeletedTaskSuccessEvent">
+<rect x="1857.0" y="42.0" height="85.0" width="282.0" data-name="DeletedTaskSuccessEvent"></rect>
+<path d="M1857.0 73.0 L2139.0 73.0" fill="none" data-name="DeletedTaskSuccessEvent"></path>
+<path d="M1857.0 119.0 L2139.0 119.0" fill="none" data-name="DeletedTaskSuccessEvent"></path>
+</g>
+<g transform="translate(1857, 42)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="DeletedTaskSuccessEvent">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="DeletedTaskSuccessEvent">
+<a id="../../api/src/task/event/deleted-task-success.event.ts.DeletedTaskSuccessEvent" xlink:href="../../api/src/task/event/deleted-task-success.event.ts"><text x="133.0" y="13.5" stroke="none" text-anchor="middle" data-name="DeletedTaskSuccessEvent">DeletedTaskSuccessEvent</text></a>
+
+</g>
+</g>
+<g transform="translate(1857, 73)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="DeletedTaskSuccessEvent">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="DeletedTaskSuccessEvent">
+<text x="0.0" y="13.5" stroke="none" data-name="DeletedTaskSuccessEvent">+command: DeleteTaskCommand</text>
+<text x="0.0" y="28.5" stroke="none" data-name="DeletedTaskSuccessEvent">+result: void</text>
+
+</g>
+</g>
+<g transform="translate(1857, 119)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="DeletedTaskSuccessEvent">
+<g transform="translate(8, 8)" fill="#33322E" data-name="DeletedTaskSuccessEvent">
+
+</g>
+</g>
+</g>
+<g data-name="DeletedTaskSuccessHandler">
+<g fill="#eee8d5" stroke="#33322E" data-name="DeletedTaskSuccessHandler">
+<rect x="2809.0" y="49.0" height="70.0" width="244.0" data-name="DeletedTaskSuccessHandler"></rect>
+<path d="M2809.0 80.0 L3053.0 80.0" fill="none" data-name="DeletedTaskSuccessHandler"></path>
+<path d="M2809.0 88.0 L3053.0 88.0" fill="none" data-name="DeletedTaskSuccessHandler"></path>
+</g>
+<g transform="translate(2809, 49)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="DeletedTaskSuccessHandler">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="DeletedTaskSuccessHandler">
+<a id="../../api/src/task/event/deleted-task-success.handler.ts.DeletedTaskSuccessHandler" xlink:href="../../api/src/task/event/deleted-task-success.handler.ts"><text x="114.0" y="13.5" stroke="none" text-anchor="middle" data-name="DeletedTaskSuccessHandler">DeletedTaskSuccessHandler</text></a>
+
+</g>
+</g>
+<g transform="translate(2809, 80)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="DeletedTaskSuccessHandler">
+<g transform="translate(8, 8)" fill="#33322E" data-name="DeletedTaskSuccessHandler">
+
+</g>
+</g>
+<g transform="translate(2809, 88)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="DeletedTaskSuccessHandler">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="DeletedTaskSuccessHandler">
+<text x="0.0" y="13.5" stroke="none" data-name="DeletedTaskSuccessHandler">+handle(): void</text>
+
+</g>
+</g>
+</g>
+<g data-name="GotTaskFailureEvent">
+<g fill="#eee8d5" stroke="#33322E" data-name="GotTaskFailureEvent">
+<rect x="6069.0" y="238.0" height="85.0" width="319.0" data-name="GotTaskFailureEvent"></rect>
+<path d="M6069.0 269.0 L6388.0 269.0" fill="none" data-name="GotTaskFailureEvent"></path>
+<path d="M6069.0 315.0 L6388.0 315.0" fill="none" data-name="GotTaskFailureEvent"></path>
+</g>
+<g transform="translate(6069, 238)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="GotTaskFailureEvent">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="GotTaskFailureEvent">
+<a id="../../api/src/task/event/got-task-failure.event.ts.GotTaskFailureEvent" xlink:href="../../api/src/task/event/got-task-failure.event.ts"><text x="151.5" y="13.5" stroke="none" text-anchor="middle" data-name="GotTaskFailureEvent">GotTaskFailureEvent</text></a>
+
+</g>
+</g>
+<g transform="translate(6069, 269)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="GotTaskFailureEvent">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="GotTaskFailureEvent">
+<text x="0.0" y="13.5" stroke="none" data-name="GotTaskFailureEvent">+query: GetTaskQuery</text>
+<text x="0.0" y="28.5" stroke="none" data-name="GotTaskFailureEvent">+error: Error | Error[] | ValidationError[]</text>
+
+</g>
+</g>
+<g transform="translate(6069, 315)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="GotTaskFailureEvent">
+<g transform="translate(8, 8)" fill="#33322E" data-name="GotTaskFailureEvent">
+
+</g>
+</g>
+</g>
+<g data-name="GotTaskFailureHandler">
+<g fill="#eee8d5" stroke="#33322E" data-name="GotTaskFailureHandler">
+<rect x="3093.0" y="49.0" height="70.0" width="198.0" data-name="GotTaskFailureHandler"></rect>
+<path d="M3093.0 80.0 L3291.0 80.0" fill="none" data-name="GotTaskFailureHandler"></path>
+<path d="M3093.0 88.0 L3291.0 88.0" fill="none" data-name="GotTaskFailureHandler"></path>
+</g>
+<g transform="translate(3093, 49)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="GotTaskFailureHandler">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="GotTaskFailureHandler">
+<a id="../../api/src/task/event/got-task-failure.handler.ts.GotTaskFailureHandler" xlink:href="../../api/src/task/event/got-task-failure.handler.ts"><text x="91.0" y="13.5" stroke="none" text-anchor="middle" data-name="GotTaskFailureHandler">GotTaskFailureHandler</text></a>
+
+</g>
+</g>
+<g transform="translate(3093, 80)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="GotTaskFailureHandler">
+<g transform="translate(8, 8)" fill="#33322E" data-name="GotTaskFailureHandler">
+
+</g>
+</g>
+<g transform="translate(3093, 88)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="GotTaskFailureHandler">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="GotTaskFailureHandler">
+<text x="0.0" y="13.5" stroke="none" data-name="GotTaskFailureHandler">+handle(): void</text>
+
+</g>
+</g>
+</g>
+<g data-name="GotTaskSuccessEvent">
+<g fill="#eee8d5" stroke="#33322E" data-name="GotTaskSuccessEvent">
+<rect x="6428.0" y="238.0" height="85.0" width="195.0" data-name="GotTaskSuccessEvent"></rect>
+<path d="M6428.0 269.0 L6623.0 269.0" fill="none" data-name="GotTaskSuccessEvent"></path>
+<path d="M6428.0 315.0 L6623.0 315.0" fill="none" data-name="GotTaskSuccessEvent"></path>
+</g>
+<g transform="translate(6428, 238)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="GotTaskSuccessEvent">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="GotTaskSuccessEvent">
+<a id="../../api/src/task/event/got-task-success.event.ts.GotTaskSuccessEvent" xlink:href="../../api/src/task/event/got-task-success.event.ts"><text x="89.5" y="13.5" stroke="none" text-anchor="middle" data-name="GotTaskSuccessEvent">GotTaskSuccessEvent</text></a>
+
+</g>
+</g>
+<g transform="translate(6428, 269)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="GotTaskSuccessEvent">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="GotTaskSuccessEvent">
+<text x="0.0" y="13.5" stroke="none" data-name="GotTaskSuccessEvent">+query: GetTaskQuery</text>
+<text x="0.0" y="28.5" stroke="none" data-name="GotTaskSuccessEvent">+result: TaskDTO</text>
+
+</g>
+</g>
+<g transform="translate(6428, 315)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="GotTaskSuccessEvent">
+<g transform="translate(8, 8)" fill="#33322E" data-name="GotTaskSuccessEvent">
+
+</g>
+</g>
+</g>
+<g data-name="GotTaskSuccessHandler">
+<g fill="#eee8d5" stroke="#33322E" data-name="GotTaskSuccessHandler">
+<rect x="3331.0" y="49.0" height="70.0" width="211.0" data-name="GotTaskSuccessHandler"></rect>
+<path d="M3331.0 80.0 L3542.0 80.0" fill="none" data-name="GotTaskSuccessHandler"></path>
+<path d="M3331.0 88.0 L3542.0 88.0" fill="none" data-name="GotTaskSuccessHandler"></path>
+</g>
+<g transform="translate(3331, 49)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="GotTaskSuccessHandler">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="GotTaskSuccessHandler">
+<a id="../../api/src/task/event/got-task-success.handler.ts.GotTaskSuccessHandler" xlink:href="../../api/src/task/event/got-task-success.handler.ts"><text x="97.5" y="13.5" stroke="none" text-anchor="middle" data-name="GotTaskSuccessHandler">GotTaskSuccessHandler</text></a>
+
+</g>
+</g>
+<g transform="translate(3331, 80)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="GotTaskSuccessHandler">
+<g transform="translate(8, 8)" fill="#33322E" data-name="GotTaskSuccessHandler">
+
+</g>
+</g>
+<g transform="translate(3331, 88)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="GotTaskSuccessHandler">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="GotTaskSuccessHandler">
+<text x="0.0" y="13.5" stroke="none" data-name="GotTaskSuccessHandler">+handle(): void</text>
+
+</g>
+</g>
+</g>
+<g data-name="ListedAllTasksFailureEvent">
+<g fill="#eee8d5" stroke="#33322E" data-name="ListedAllTasksFailureEvent">
+<rect x="6663.0" y="238.0" height="85.0" width="319.0" data-name="ListedAllTasksFailureEvent"></rect>
+<path d="M6663.0 269.0 L6982.0 269.0" fill="none" data-name="ListedAllTasksFailureEvent"></path>
+<path d="M6663.0 315.0 L6982.0 315.0" fill="none" data-name="ListedAllTasksFailureEvent"></path>
+</g>
+<g transform="translate(6663, 238)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="ListedAllTasksFailureEvent">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="ListedAllTasksFailureEvent">
+<a id="../../api/src/task/event/listed-all-tasks-failure.event.ts.ListedAllTasksFailureEvent" xlink:href="../../api/src/task/event/listed-all-tasks-failure.event.ts"><text x="151.5" y="13.5" stroke="none" text-anchor="middle" data-name="ListedAllTasksFailureEvent">ListedAllTasksFailureEvent</text></a>
+
+</g>
+</g>
+<g transform="translate(6663, 269)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="ListedAllTasksFailureEvent">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="ListedAllTasksFailureEvent">
+<text x="0.0" y="13.5" stroke="none" data-name="ListedAllTasksFailureEvent">+query: ListAllTasksQuery</text>
+<text x="0.0" y="28.5" stroke="none" data-name="ListedAllTasksFailureEvent">+error: Error | Error[] | ValidationError[]</text>
+
+</g>
+</g>
+<g transform="translate(6663, 315)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="ListedAllTasksFailureEvent">
+<g transform="translate(8, 8)" fill="#33322E" data-name="ListedAllTasksFailureEvent">
+
+</g>
+</g>
+</g>
+<g data-name="ListedAllTasksFailureHandler">
+<g fill="#eee8d5" stroke="#33322E" data-name="ListedAllTasksFailureHandler">
+<rect x="3582.0" y="49.0" height="70.0" width="246.0" data-name="ListedAllTasksFailureHandler"></rect>
+<path d="M3582.0 80.0 L3828.0 80.0" fill="none" data-name="ListedAllTasksFailureHandler"></path>
+<path d="M3582.0 88.0 L3828.0 88.0" fill="none" data-name="ListedAllTasksFailureHandler"></path>
+</g>
+<g transform="translate(3582, 49)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="ListedAllTasksFailureHandler">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="ListedAllTasksFailureHandler">
+<a id="../../api/src/task/event/listed-all-tasks-failure.handler.ts.ListedAllTasksFailureHandler" xlink:href="../../api/src/task/event/listed-all-tasks-failure.handler.ts"><text x="115.0" y="13.5" stroke="none" text-anchor="middle" data-name="ListedAllTasksFailureHandler">ListedAllTasksFailureHandler</text></a>
+
+</g>
+</g>
+<g transform="translate(3582, 80)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="ListedAllTasksFailureHandler">
+<g transform="translate(8, 8)" fill="#33322E" data-name="ListedAllTasksFailureHandler">
+
+</g>
+</g>
+<g transform="translate(3582, 88)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="ListedAllTasksFailureHandler">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="ListedAllTasksFailureHandler">
+<text x="0.0" y="13.5" stroke="none" data-name="ListedAllTasksFailureHandler">+handle(): void</text>
+
+</g>
+</g>
+</g>
+<g data-name="ListedAllTasksSuccessEvent">
+<g fill="#eee8d5" stroke="#33322E" data-name="ListedAllTasksSuccessEvent">
+<rect x="7022.0" y="238.0" height="85.0" width="242.0" data-name="ListedAllTasksSuccessEvent"></rect>
+<path d="M7022.0 269.0 L7264.0 269.0" fill="none" data-name="ListedAllTasksSuccessEvent"></path>
+<path d="M7022.0 315.0 L7264.0 315.0" fill="none" data-name="ListedAllTasksSuccessEvent"></path>
+</g>
+<g transform="translate(7022, 238)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="ListedAllTasksSuccessEvent">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="ListedAllTasksSuccessEvent">
+<a id="../../api/src/task/event/listed-all-tasks-success.event.ts.ListedAllTasksSuccessEvent" xlink:href="../../api/src/task/event/listed-all-tasks-success.event.ts"><text x="113.0" y="13.5" stroke="none" text-anchor="middle" data-name="ListedAllTasksSuccessEvent">ListedAllTasksSuccessEvent</text></a>
+
+</g>
+</g>
+<g transform="translate(7022, 269)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="ListedAllTasksSuccessEvent">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="ListedAllTasksSuccessEvent">
+<text x="0.0" y="13.5" stroke="none" data-name="ListedAllTasksSuccessEvent">+query: ListAllTasksQuery</text>
+<text x="0.0" y="28.5" stroke="none" data-name="ListedAllTasksSuccessEvent">+result: TaskDTO[]</text>
+
+</g>
+</g>
+<g transform="translate(7022, 315)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="ListedAllTasksSuccessEvent">
+<g transform="translate(8, 8)" fill="#33322E" data-name="ListedAllTasksSuccessEvent">
+
+</g>
+</g>
+</g>
+<g data-name="ListedAllTasksSuccessHandler">
+<g fill="#eee8d5" stroke="#33322E" data-name="ListedAllTasksSuccessHandler">
+<rect x="3868.0" y="49.0" height="70.0" width="259.0" data-name="ListedAllTasksSuccessHandler"></rect>
+<path d="M3868.0 80.0 L4127.0 80.0" fill="none" data-name="ListedAllTasksSuccessHandler"></path>
+<path d="M3868.0 88.0 L4127.0 88.0" fill="none" data-name="ListedAllTasksSuccessHandler"></path>
+</g>
+<g transform="translate(3868, 49)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="ListedAllTasksSuccessHandler">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="ListedAllTasksSuccessHandler">
+<a id="../../api/src/task/event/listed-all-tasks-success.handler.ts.ListedAllTasksSuccessHandler" xlink:href="../../api/src/task/event/listed-all-tasks-success.handler.ts"><text x="121.5" y="13.5" stroke="none" text-anchor="middle" data-name="ListedAllTasksSuccessHandler">ListedAllTasksSuccessHandler</text></a>
+
+</g>
+</g>
+<g transform="translate(3868, 80)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="ListedAllTasksSuccessHandler">
+<g transform="translate(8, 8)" fill="#33322E" data-name="ListedAllTasksSuccessHandler">
+
+</g>
+</g>
+<g transform="translate(3868, 88)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="ListedAllTasksSuccessHandler">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="ListedAllTasksSuccessHandler">
+<text x="0.0" y="13.5" stroke="none" data-name="ListedAllTasksSuccessHandler">+handle(): void</text>
+
+</g>
+</g>
+</g>
+<g data-name="UpdatedTaskFailureEvent">
+<g fill="#eee8d5" stroke="#33322E" data-name="UpdatedTaskFailureEvent">
+<rect x="4768.0" y="42.0" height="85.0" width="319.0" data-name="UpdatedTaskFailureEvent"></rect>
+<path d="M4768.0 73.0 L5087.0 73.0" fill="none" data-name="UpdatedTaskFailureEvent"></path>
+<path d="M4768.0 119.0 L5087.0 119.0" fill="none" data-name="UpdatedTaskFailureEvent"></path>
+</g>
+<g transform="translate(4768, 42)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="UpdatedTaskFailureEvent">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="UpdatedTaskFailureEvent">
+<a id="../../api/src/task/event/updated-task-failure.event.ts.UpdatedTaskFailureEvent" xlink:href="../../api/src/task/event/updated-task-failure.event.ts"><text x="151.5" y="13.5" stroke="none" text-anchor="middle" data-name="UpdatedTaskFailureEvent">UpdatedTaskFailureEvent</text></a>
+
+</g>
+</g>
+<g transform="translate(4768, 73)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="UpdatedTaskFailureEvent">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="UpdatedTaskFailureEvent">
+<text x="0.0" y="13.5" stroke="none" data-name="UpdatedTaskFailureEvent">+command: UpdateTaskCommand</text>
+<text x="0.0" y="28.5" stroke="none" data-name="UpdatedTaskFailureEvent">+error: Error | Error[] | ValidationError[]</text>
+
+</g>
+</g>
+<g transform="translate(4768, 119)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="UpdatedTaskFailureEvent">
+<g transform="translate(8, 8)" fill="#33322E" data-name="UpdatedTaskFailureEvent">
+
+</g>
+</g>
+</g>
+<g data-name="UpdatedTaskFailureHandler">
+<g fill="#eee8d5" stroke="#33322E" data-name="UpdatedTaskFailureHandler">
+<rect x="4491.0" y="49.0" height="70.0" width="237.0" data-name="UpdatedTaskFailureHandler"></rect>
+<path d="M4491.0 80.0 L4728.0 80.0" fill="none" data-name="UpdatedTaskFailureHandler"></path>
+<path d="M4491.0 88.0 L4728.0 88.0" fill="none" data-name="UpdatedTaskFailureHandler"></path>
+</g>
+<g transform="translate(4491, 49)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="UpdatedTaskFailureHandler">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="UpdatedTaskFailureHandler">
+<a id="../../api/src/task/event/updated-task-failure.handler.ts.UpdatedTaskFailureHandler" xlink:href="../../api/src/task/event/updated-task-failure.handler.ts"><text x="110.5" y="13.5" stroke="none" text-anchor="middle" data-name="UpdatedTaskFailureHandler">UpdatedTaskFailureHandler</text></a>
+
+</g>
+</g>
+<g transform="translate(4491, 80)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="UpdatedTaskFailureHandler">
+<g transform="translate(8, 8)" fill="#33322E" data-name="UpdatedTaskFailureHandler">
+
+</g>
+</g>
+<g transform="translate(4491, 88)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="UpdatedTaskFailureHandler">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="UpdatedTaskFailureHandler">
+<text x="0.0" y="13.5" stroke="none" data-name="UpdatedTaskFailureHandler">+handle(): void</text>
+
+</g>
+</g>
+</g>
+<g data-name="UpdatedTaskSuccessEvent">
+<g fill="#eee8d5" stroke="#33322E" data-name="UpdatedTaskSuccessEvent">
+<rect x="1243.0" y="42.0" height="85.0" width="288.0" data-name="UpdatedTaskSuccessEvent"></rect>
+<path d="M1243.0 73.0 L1531.0 73.0" fill="none" data-name="UpdatedTaskSuccessEvent"></path>
+<path d="M1243.0 119.0 L1531.0 119.0" fill="none" data-name="UpdatedTaskSuccessEvent"></path>
+</g>
+<g transform="translate(1243, 42)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="UpdatedTaskSuccessEvent">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="UpdatedTaskSuccessEvent">
+<a id="../../api/src/task/event/updated-task-success.event.ts.UpdatedTaskSuccessEvent" xlink:href="../../api/src/task/event/updated-task-success.event.ts"><text x="136.0" y="13.5" stroke="none" text-anchor="middle" data-name="UpdatedTaskSuccessEvent">UpdatedTaskSuccessEvent</text></a>
+
+</g>
+</g>
+<g transform="translate(1243, 73)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="UpdatedTaskSuccessEvent">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="UpdatedTaskSuccessEvent">
+<text x="0.0" y="13.5" stroke="none" data-name="UpdatedTaskSuccessEvent">+command: UpdateTaskCommand</text>
+<text x="0.0" y="28.5" stroke="none" data-name="UpdatedTaskSuccessEvent">+result: TaskDTO</text>
+
+</g>
+</g>
+<g transform="translate(1243, 119)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="UpdatedTaskSuccessEvent">
+<g transform="translate(8, 8)" fill="#33322E" data-name="UpdatedTaskSuccessEvent">
+
+</g>
+</g>
+</g>
+<g data-name="UpdatedTaskSuccessHandler">
+<g fill="#eee8d5" stroke="#33322E" data-name="UpdatedTaskSuccessHandler">
+<rect x="5127.0" y="49.0" height="70.0" width="250.0" data-name="UpdatedTaskSuccessHandler"></rect>
+<path d="M5127.0 80.0 L5377.0 80.0" fill="none" data-name="UpdatedTaskSuccessHandler"></path>
+<path d="M5127.0 88.0 L5377.0 88.0" fill="none" data-name="UpdatedTaskSuccessHandler"></path>
+</g>
+<g transform="translate(5127, 49)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="UpdatedTaskSuccessHandler">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="UpdatedTaskSuccessHandler">
+<a id="../../api/src/task/event/updated-task-success.handler.ts.UpdatedTaskSuccessHandler" xlink:href="../../api/src/task/event/updated-task-success.handler.ts"><text x="117.0" y="13.5" stroke="none" text-anchor="middle" data-name="UpdatedTaskSuccessHandler">UpdatedTaskSuccessHandler</text></a>
+
+</g>
+</g>
+<g transform="translate(5127, 80)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="UpdatedTaskSuccessHandler">
+<g transform="translate(8, 8)" fill="#33322E" data-name="UpdatedTaskSuccessHandler">
+
+</g>
+</g>
+<g transform="translate(5127, 88)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="UpdatedTaskSuccessHandler">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="UpdatedTaskSuccessHandler">
+<text x="0.0" y="13.5" stroke="none" data-name="UpdatedTaskSuccessHandler">+handle(): void</text>
+
+</g>
+</g>
+</g>
+<g data-name="GetTaskHandler">
+<g fill="#eee8d5" stroke="#33322E" data-name="GetTaskHandler">
+<rect x="7304.0" y="227.0" height="108.0" width="279.0" data-name="GetTaskHandler"></rect>
+<path d="M7304.0 258.0 L7583.0 258.0" fill="none" data-name="GetTaskHandler"></path>
+<path d="M7304.0 304.0 L7583.0 304.0" fill="none" data-name="GetTaskHandler"></path>
+</g>
+<g transform="translate(7304, 227)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="GetTaskHandler">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="GetTaskHandler">
+<a id="../../api/src/task/query/get-task.handler.ts.GetTaskHandler" xlink:href="../../api/src/task/query/get-task.handler.ts"><text x="131.5" y="13.5" stroke="none" text-anchor="middle" data-name="GetTaskHandler">GetTaskHandler</text></a>
+
+</g>
+</g>
+<g transform="translate(7304, 258)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="GetTaskHandler">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="GetTaskHandler">
+<text x="0.0" y="13.5" stroke="none" data-name="GetTaskHandler">-getTaskService: GetTaskService</text>
+<text x="0.0" y="28.5" stroke="none" data-name="GetTaskHandler">-eventBus: EventBus&lt;IEvent&gt;</text>
+
+</g>
+</g>
+<g transform="translate(7304, 304)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="GetTaskHandler">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="GetTaskHandler">
+<text x="0.0" y="13.5" stroke="none" data-name="GetTaskHandler">+execute(): Promise&lt;TaskDTO&gt;</text>
+
+</g>
+</g>
+</g>
+<g data-name="GetTaskQuery">
+<g fill="#eee8d5" stroke="#33322E" data-name="GetTaskQuery">
+<rect x="6312.0" y="438.0" height="70.0" width="130.0" data-name="GetTaskQuery"></rect>
+<path d="M6312.0 469.0 L6442.0 469.0" fill="none" data-name="GetTaskQuery"></path>
+<path d="M6312.0 500.0 L6442.0 500.0" fill="none" data-name="GetTaskQuery"></path>
+</g>
+<g transform="translate(6312, 438)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="GetTaskQuery">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="GetTaskQuery">
+<a id="../../api/src/task/query/get-task.query.ts.GetTaskQuery" xlink:href="../../api/src/task/query/get-task.query.ts"><text x="57.0" y="13.5" stroke="none" text-anchor="middle" data-name="GetTaskQuery">GetTaskQuery</text></a>
+
+</g>
+</g>
+<g transform="translate(6312, 469)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="GetTaskQuery">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="GetTaskQuery">
+<text x="0.0" y="13.5" stroke="none" data-name="GetTaskQuery">+taskId: string</text>
+
+</g>
+</g>
+<g transform="translate(6312, 500)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="GetTaskQuery">
+<g transform="translate(8, 8)" fill="#33322E" data-name="GetTaskQuery">
+
+</g>
+</g>
+</g>
+<g data-name="ListAllTasksHandler">
+<g fill="#eee8d5" stroke="#33322E" data-name="ListAllTasksHandler">
+<rect x="5744.0" y="227.0" height="108.0" width="285.0" data-name="ListAllTasksHandler"></rect>
+<path d="M5744.0 258.0 L6029.0 258.0" fill="none" data-name="ListAllTasksHandler"></path>
+<path d="M5744.0 304.0 L6029.0 304.0" fill="none" data-name="ListAllTasksHandler"></path>
+</g>
+<g transform="translate(5744, 227)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="ListAllTasksHandler">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="ListAllTasksHandler">
+<a id="../../api/src/task/query/list-all-tasks.handler.ts.ListAllTasksHandler" xlink:href="../../api/src/task/query/list-all-tasks.handler.ts"><text x="134.5" y="13.5" stroke="none" text-anchor="middle" data-name="ListAllTasksHandler">ListAllTasksHandler</text></a>
+
+</g>
+</g>
+<g transform="translate(5744, 258)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="ListAllTasksHandler">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="ListAllTasksHandler">
+<text x="0.0" y="13.5" stroke="none" data-name="ListAllTasksHandler">-listAllService: ListAllTasksService</text>
+<text x="0.0" y="28.5" stroke="none" data-name="ListAllTasksHandler">-eventBus: EventBus&lt;IEvent&gt;</text>
+
+</g>
+</g>
+<g transform="translate(5744, 304)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="ListAllTasksHandler">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="ListAllTasksHandler">
+<text x="0.0" y="13.5" stroke="none" data-name="ListAllTasksHandler">+execute(): Promise&lt;TaskDTO[]&gt;</text>
+
+</g>
+</g>
+</g>
+<g data-name="ListAllTasksQuery">
+<g fill="#eee8d5" stroke="#33322E" data-name="ListAllTasksQuery">
+<rect x="6903.0" y="450.0" height="47.0" width="158.0" data-name="ListAllTasksQuery"></rect>
+<path d="M6903.0 481.0 L7061.0 481.0" fill="none" data-name="ListAllTasksQuery"></path>
+<path d="M6903.0 489.0 L7061.0 489.0" fill="none" data-name="ListAllTasksQuery"></path>
+</g>
+<g transform="translate(6903, 450)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="ListAllTasksQuery">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="ListAllTasksQuery">
+<a id="../../api/src/task/query/list-all-tasks.query.ts.ListAllTasksQuery" xlink:href="../../api/src/task/query/list-all-tasks.query.ts"><text x="71.0" y="13.5" stroke="none" text-anchor="middle" data-name="ListAllTasksQuery">ListAllTasksQuery</text></a>
+
+</g>
+</g>
+<g transform="translate(6903, 481)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="ListAllTasksQuery">
+<g transform="translate(8, 8)" fill="#33322E" data-name="ListAllTasksQuery">
+
+</g>
+</g>
+<g transform="translate(6903, 489)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="ListAllTasksQuery">
+<g transform="translate(8, 8)" fill="#33322E" data-name="ListAllTasksQuery">
+
+</g>
+</g>
+</g>
+<g data-name="CreateTaskService">
+<g fill="#eee8d5" stroke="#33322E" data-name="CreateTaskService">
+<rect x="8395.0" y="427.0" height="93.0" width="273.0" data-name="CreateTaskService"></rect>
+<path d="M8395.0 458.0 L8668.0 458.0" fill="none" data-name="CreateTaskService"></path>
+<path d="M8395.0 489.0 L8668.0 489.0" fill="none" data-name="CreateTaskService"></path>
+</g>
+<g transform="translate(8395, 427)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="CreateTaskService">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="CreateTaskService">
+<a id="../../api/src/task/services/create-task.ts.CreateTaskService" xlink:href="../../api/src/task/services/create-task.ts"><text x="128.5" y="13.5" stroke="none" text-anchor="middle" data-name="CreateTaskService">CreateTaskService</text></a>
+
+</g>
+</g>
+<g transform="translate(8395, 458)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="CreateTaskService">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="CreateTaskService">
+<text x="0.0" y="13.5" stroke="none" data-name="CreateTaskService">-taskRepository: TaskRepository</text>
+
+</g>
+</g>
+<g transform="translate(8395, 489)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="CreateTaskService">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="CreateTaskService">
+<text x="0.0" y="13.5" stroke="none" data-name="CreateTaskService">+create(): Promise&lt;TaskDTO&gt;</text>
+
+</g>
+</g>
+</g>
+<g data-name="DeleteTaskService">
+<g fill="#eee8d5" stroke="#33322E" data-name="DeleteTaskService">
+<rect x="8027.0" y="427.0" height="93.0" width="273.0" data-name="DeleteTaskService"></rect>
+<path d="M8027.0 458.0 L8300.0 458.0" fill="none" data-name="DeleteTaskService"></path>
+<path d="M8027.0 489.0 L8300.0 489.0" fill="none" data-name="DeleteTaskService"></path>
+</g>
+<g transform="translate(8027, 427)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="DeleteTaskService">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="DeleteTaskService">
+<a id="../../api/src/task/services/delete-task.ts.DeleteTaskService" xlink:href="../../api/src/task/services/delete-task.ts"><text x="128.5" y="13.5" stroke="none" text-anchor="middle" data-name="DeleteTaskService">DeleteTaskService</text></a>
+
+</g>
+</g>
+<g transform="translate(8027, 458)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="DeleteTaskService">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="DeleteTaskService">
+<text x="0.0" y="13.5" stroke="none" data-name="DeleteTaskService">-taskRepository: TaskRepository</text>
+
+</g>
+</g>
+<g transform="translate(8027, 489)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="DeleteTaskService">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="DeleteTaskService">
+<text x="0.0" y="13.5" stroke="none" data-name="DeleteTaskService">+delete(): Promise&lt;void&gt;</text>
+
+</g>
+</g>
+</g>
+<g data-name="GetTaskService">
+<g fill="#eee8d5" stroke="#33322E" data-name="GetTaskService">
+<rect x="7307.0" y="427.0" height="93.0" width="273.0" data-name="GetTaskService"></rect>
+<path d="M7307.0 458.0 L7580.0 458.0" fill="none" data-name="GetTaskService"></path>
+<path d="M7307.0 489.0 L7580.0 489.0" fill="none" data-name="GetTaskService"></path>
+</g>
+<g transform="translate(7307, 427)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="GetTaskService">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="GetTaskService">
+<a id="../../api/src/task/services/get-task.ts.GetTaskService" xlink:href="../../api/src/task/services/get-task.ts"><text x="128.5" y="13.5" stroke="none" text-anchor="middle" data-name="GetTaskService">GetTaskService</text></a>
+
+</g>
+</g>
+<g transform="translate(7307, 458)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="GetTaskService">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="GetTaskService">
+<text x="0.0" y="13.5" stroke="none" data-name="GetTaskService">-taskRepository: TaskRepository</text>
+
+</g>
+</g>
+<g transform="translate(7307, 489)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="GetTaskService">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="GetTaskService">
+<text x="0.0" y="13.5" stroke="none" data-name="GetTaskService">+get(): Promise&lt;TaskModel&gt;</text>
+
+</g>
+</g>
+</g>
+<g data-name="ListAllTasksService">
+<g fill="#eee8d5" stroke="#33322E" data-name="ListAllTasksService">
+<rect x="5750.0" y="427.0" height="93.0" width="273.0" data-name="ListAllTasksService"></rect>
+<path d="M5750.0 458.0 L6023.0 458.0" fill="none" data-name="ListAllTasksService"></path>
+<path d="M5750.0 489.0 L6023.0 489.0" fill="none" data-name="ListAllTasksService"></path>
+</g>
+<g transform="translate(5750, 427)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="ListAllTasksService">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="ListAllTasksService">
+<a id="../../api/src/task/services/list-all-tasks.ts.ListAllTasksService" xlink:href="../../api/src/task/services/list-all-tasks.ts"><text x="128.5" y="13.5" stroke="none" text-anchor="middle" data-name="ListAllTasksService">ListAllTasksService</text></a>
+
+</g>
+</g>
+<g transform="translate(5750, 458)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="ListAllTasksService">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="ListAllTasksService">
+<text x="0.0" y="13.5" stroke="none" data-name="ListAllTasksService">-taskRepository: TaskRepository</text>
+
+</g>
+</g>
+<g transform="translate(5750, 489)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="ListAllTasksService">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="ListAllTasksService">
+<text x="0.0" y="13.5" stroke="none" data-name="ListAllTasksService">+get(): Promise&lt;TaskModel[]&gt;</text>
+
+</g>
+</g>
+</g>
+<g data-name="UpdateTaskService">
+<g fill="#eee8d5" stroke="#33322E" data-name="UpdateTaskService">
+<rect x="7655.0" y="427.0" height="93.0" width="273.0" data-name="UpdateTaskService"></rect>
+<path d="M7655.0 458.0 L7928.0 458.0" fill="none" data-name="UpdateTaskService"></path>
+<path d="M7655.0 489.0 L7928.0 489.0" fill="none" data-name="UpdateTaskService"></path>
+</g>
+<g transform="translate(7655, 427)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="UpdateTaskService">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="UpdateTaskService">
+<a id="../../api/src/task/services/update-task.ts.UpdateTaskService" xlink:href="../../api/src/task/services/update-task.ts"><text x="128.5" y="13.5" stroke="none" text-anchor="middle" data-name="UpdateTaskService">UpdateTaskService</text></a>
+
+</g>
+</g>
+<g transform="translate(7655, 458)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="UpdateTaskService">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="UpdateTaskService">
+<text x="0.0" y="13.5" stroke="none" data-name="UpdateTaskService">-taskRepository: TaskRepository</text>
+
+</g>
+</g>
+<g transform="translate(7655, 489)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="UpdateTaskService">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="UpdateTaskService">
+<text x="0.0" y="13.5" stroke="none" data-name="UpdateTaskService">+update(): Promise&lt;TaskDTO&gt;</text>
+
+</g>
+</g>
+</g>
+<g data-name="OnModuleInit">
+<g fill="#eee8d5" stroke="#33322E" data-name="OnModuleInit">
+<rect x="809.0" y="69.0" height="31.0" width="121.0" data-name="OnModuleInit"></rect>
+</g>
+<g transform="translate(809, 69)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="OnModuleInit">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="OnModuleInit">
+<text x="52.5" y="13.5" stroke="none" text-anchor="middle" data-name="OnModuleInit">OnModuleInit</text>
+
+</g>
+</g>
+</g>
+<g data-name="ICommandHandler&lt;TCommand,TResult&gt;">
+<g fill="#eee8d5" stroke="#33322E" data-name="ICommandHandler&lt;TCommand,TResult&gt;">
+<rect x="7995.0" y="69.0" height="31.0" width="338.0" data-name="ICommandHandler&lt;TCommand,TResult&gt;"></rect>
+</g>
+<g transform="translate(7995, 69)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="ICommandHandler&lt;TCommand,TResult&gt;">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="ICommandHandler&lt;TCommand,TResult&gt;">
+<text x="161.0" y="13.5" stroke="none" text-anchor="middle" data-name="ICommandHandler&lt;TCommand,TResult&gt;">ICommandHandler&lt;TCommand,TResult&gt;</text>
+
+</g>
+</g>
+</g>
+<g data-name="IQueryHandler&lt;T,TRes&gt;">
+<g fill="#eee8d5" stroke="#33322E" data-name="IQueryHandler&lt;T,TRes&gt;">
+<rect x="6561.0" y="69.0" height="31.0" width="207.0" data-name="IQueryHandler&lt;T,TRes&gt;"></rect>
+</g>
+<g transform="translate(6561, 69)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="IQueryHandler&lt;T,TRes&gt;">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="IQueryHandler&lt;T,TRes&gt;">
+<text x="95.5" y="13.5" stroke="none" text-anchor="middle" data-name="IQueryHandler&lt;T,TRes&gt;">IQueryHandler&lt;T,TRes&gt;</text>
+
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+</svg>
