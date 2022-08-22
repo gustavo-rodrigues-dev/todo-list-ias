@@ -24,6 +24,10 @@ As for the unit tests, I kept them nested in implementing modules and classes, s
 
 ![API UML](./doc/api/diagram.svg ' API Components')
 
+### API test
+
+The postman collection is in ./postaman.json, and you can test routes there.
+
 ### Disclaimers
 
 #### *Why it use NestJS*

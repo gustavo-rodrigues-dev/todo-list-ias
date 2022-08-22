@@ -34,4 +34,3 @@ jobs:
       - run: npm test
       - run: bash <(curl -Ls https://coverage.codacy.com/get.sh)
       - run: npm run build
-

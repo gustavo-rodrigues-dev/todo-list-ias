@@ -28,7 +28,7 @@ export class TaskRepository {
     if (!task.id) {
       throw new Error('Task id is required');
     }
-    return await this.taskModel.update({ id: task.id } as TaskKey, task);
+    return await this.taskModel.update(task as TaskModel);
   }
 
   async delete(id: string): Promise<void> {
