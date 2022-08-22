@@ -24,7 +24,7 @@
     "@commitlint/config-angular": "17.0.3",
     "@commitlint/config-conventional": "17.0.3",
     "@mhlabs/cfn-diagram": "1.1.36",
-    "@types/node": "16.11.52",
+    "@types/node": "16.11.53",
     "dockerlinter": "1.2.2",
     "draw.io-export": "0.2.0",
     "husky": "8.0.1",
