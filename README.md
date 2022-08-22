@@ -10,11 +10,19 @@ This project is structured in a mono-repository where it is possible to have an 
 In this session, all the infrastructure code using CDK, where OO and precedence issues were used to build the Stack.
 About the infrastructure, all the code can be seen from the `./infrastructure` folder. That all resources have unit testing to check permissions and precedence.
 
+### Diagram
+
+![AWS Components](./doc/infra/template.png 'AWS Components')
+
 ## API
 
 In the API, I used NestJS to ease the application’s modularization and reduce the need to create non-functional codes with standardization.
 In terms of architecture, I chose to use domain-oriented CQRS, as we can explore asynchronous event invocations that can react to task stream actions. The command part is free to be executed in an HTTP controller, event, or even a lambda handler.
 As for the unit tests, I kept them nested in implementing modules and classes, so test contexts’ maintenance, coverage, and execution become more usual and visual.
+
+### Diagram
+
+![API UML](./doc/api/diagram.svg ' API Components')
 
 ### Disclaimers
 
