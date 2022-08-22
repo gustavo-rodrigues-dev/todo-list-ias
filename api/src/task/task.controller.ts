@@ -31,7 +31,7 @@ export class TaskController {
     return await this.commandBus.execute(new CreateTaskCommand(task));
   }
 
-  @Get()
+  @Get('/')
   @HttpCode(HttpStatus.OK)
   async listAllTasks() {
     return await this.queryBus.execute(new ListAllTasksQuery());

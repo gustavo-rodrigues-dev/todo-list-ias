@@ -1,111 +1,111 @@
 {
-	"variables": [],
-	"info": {
-		"name": "Task",
-		"_postman_id": "9ecc9679-c7f4-79d5-a0a6-3b8a702cc3b0",
-		"description": "",
-		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
-	},
-	"item": [
-		{
-			"name": "{{url}}task",
-			"request": {
-				"url": "{{url}}task",
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/json",
-						"description": ""
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n\t\"eqweqw\": \"foo bar\",\n\t\"description\": \"test\"\n}"
-				},
-				"description": "Create Task"
-			},
-			"response": []
-		},
-		{
-			"name": "{{url}}task",
-			"request": {
-				"url": "{{url}}task",
-				"method": "GET",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/json",
-						"description": ""
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n\t\"eqweqw\": \"foo bar\",\n\t\"description\": \"test\"\n}"
-				},
-				"description": "Create Task"
-			},
-			"response": []
-		},
-		{
-			"name": "{{url}}task/:id",
-			"request": {
-				"url": "{{url}}task",
-				"method": "GET",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/json",
-						"description": ""
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n\t\"eqweqw\": \"foo bar\",\n\t\"description\": \"test\"\n}"
-				},
-				"description": "Create Task"
-			},
-			"response": []
-		},
-		{
-			"name": "{{url}}task/:id",
-			"request": {
-				"url": "{{url}}task/f7b945d7-7176-4b99-8e79-3d89656a0dd0",
-				"method": "PUT",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/json",
-						"description": ""
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"createdAt\": \"2022-07-06T08:28:14.967Z\",\n    \"description\": \"updated\",\n    \"id\": \"f7b945d7-7176-4b99-8e79-3d89656a0dd0\",\n    \"updatedAt\": \"2022-07-06T08:28:14.967Z\",\n    \"title\": \"foo bar\"\n}"
-				},
-				"description": "Create Task"
-			},
-			"response": []
-		},
-		{
-			"name": "{{url}}task/:id",
-			"request": {
-				"url": "{{url}}task/f7b945d7-7176-4b99-8e79-3d89656a0dd0",
-				"method": "PUT",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/json",
-						"description": ""
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"createdAt\": \"2022-07-06T08:28:14.967Z\",\n    \"description\": \"updated\",\n    \"id\": \"f7b945d7-7176-4b99-8e79-3d89656a0dd0\",\n    \"updatedAt\": \"2022-07-06T08:28:14.967Z\",\n    \"title\": \"foo bar\"\n}"
-				},
-				"description": "Create Task"
-			},
-			"response": []
-		}
-	]
+  "variables": [],
+  "info": {
+    "name": "Task",
+    "_postman_id": "9ecc9679-c7f4-79d5-a0a6-3b8a702cc3b0",
+    "description": "",
+    "schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "{{url}}task",
+      "request": {
+        "url": "{{url}}task",
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "description": ""
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n\t\"title\": \"foo bar\",\n\t\"description\": \"test\"\n}"
+        },
+        "description": "Create Task"
+      },
+      "response": []
+    },
+    {
+      "name": "{{url}}task",
+      "request": {
+        "url": "{{url}}task",
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "description": ""
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n\t\"eqweqw\": \"foo bar\",\n\t\"description\": \"test\"\n}"
+        },
+        "description": "Create Task"
+      },
+      "response": []
+    },
+    {
+      "name": "{{url}}task/:id",
+      "request": {
+        "url": "{{url}}task/f2527c36-5b29-4064-a19d-c511d0ea483c",
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "description": ""
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n\t\"eqweqw\": \"foo bar\",\n\t\"description\": \"test\"\n}"
+        },
+        "description": "Create Task"
+      },
+      "response": []
+    },
+    {
+      "name": "{{url}}task/:id",
+      "request": {
+        "url": "{{url}}task/f2527c36-5b29-4064-a19d-c511d0ea483c",
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "description": ""
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"description\": \"updated\",\n    \"id\": \"f2527c36-5b29-4064-a19d-c511d0ea483c\"\n}"
+        },
+        "description": "Create Task"
+      },
+      "response": []
+    },
+    {
+      "name": "{{url}}task/:id",
+      "request": {
+        "url": "{{url}}task/f7b945d7-7176-4b99-8e79-3d89656a0dd0",
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "description": ""
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": ""
+        },
+        "description": "Create Task"
+      },
+      "response": []
+    }
+  ]
 }

@@ -23,7 +23,7 @@ describe(TaskRepository.name, () => {
       return result;
     });
 
-    update = jest.fn().mockImplementation(async (id, args) => {
+    update = jest.fn().mockImplementation(async args => {
       const result = {
         ...args,
       };
@@ -237,7 +237,7 @@ describe(TaskRepository.name, () => {
 
       const useCase = await target.update(task);
 
-      expect(update).toHaveBeenCalledWith({ id: task.id }, { ...task });
+      expect(update).toHaveBeenCalledWith({ ...task });
       expect(update).toHaveBeenCalledTimes(1);
 
       expect(useCase).toMatchObject({

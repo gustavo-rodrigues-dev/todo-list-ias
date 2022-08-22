@@ -22,7 +22,6 @@ export const handle: Handler = async (
     if (!server) {
       server = server ?? (await bootstrap());
     }
-
     return await server(event, context, callback);
   } catch (error) {
     console.error(error);
