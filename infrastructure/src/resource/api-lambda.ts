@@ -40,6 +40,7 @@ export class ApiFunctionStack {
         },
       ),
       environment: {
+        NEW_RELIC_TOKEN: process.env.NEW_RELIC_TOKEN || '',
         BUCKET_NAME: bucket.bucketName,
         TABLE_NAME: dynamodb.tableName,
         DB_STUB: 'False',
