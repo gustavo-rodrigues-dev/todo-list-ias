@@ -1,3 +1,4 @@
+require('./tracing');
 import { NestFactory } from '@nestjs/core';
 import serverlessExpress from '@vendia/serverless-express';
 import { APIGatewayEvent, Callback, Context, Handler } from 'aws-lambda';
