@@ -4,6 +4,7 @@ import {
   Delete,
   Get,
   HttpCode,
+  HttpException,
   HttpStatus,
   Inject,
   Param,
@@ -40,13 +41,22 @@ export class TaskController {
   @Get('/:id')
   @HttpCode(HttpStatus.OK)
   async getTask(@Param('id') taskId: string) {
-    return await this.queryBus.execute(new GetTaskQuery(taskId));
-  }
+    const result = await this.queryBus.execute(new GetTaskQuery(taskId));
 
+    if (!result) {
+      throw new HttpException('Task not found', HttpStatus.NOT_FOUND);
+    }
+    return result;
+  }
   @Put('/:id')
   @HttpCode(HttpStatus.OK)
   async updateTask(@Param('id') _taskId: string, @Body() task: TaskDTO) {
-    return await this.commandBus.execute(new UpdateTaskCommand(task));
+    const result = await this.commandBus.execute(new UpdateTaskCommand(task));
+
+    if (!result) {
+      throw new HttpException('Task not found', HttpStatus.NOT_FOUND);
+    }
+    return result;
   }
 
   @Delete('/:id')

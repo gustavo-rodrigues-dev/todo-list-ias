@@ -1,3 +1,4 @@
+import { HttpException } from '@nestjs/common';
 import { CommandBus, CqrsModule, QueryBus } from '@nestjs/cqrs';
 import { Test } from '@nestjs/testing';
 import { CreateTaskCommand } from './command/create-task.command';
@@ -27,6 +28,10 @@ describe(TaskController.name, () => {
           throw new Error('Some Error');
         }
 
+        if ((args as any)?.task?.id === 'notFound') {
+          return undefined;
+        }
+
         if (args.taskId === 'delete') {
           return undefined;
         }
@@ -53,6 +58,10 @@ describe(TaskController.name, () => {
               description: 'test',
             },
           ];
+        }
+
+        if (args.taskId === 'notFound') {
+          return undefined;
         }
 
         const result = {
@@ -148,6 +157,31 @@ describe(TaskController.name, () => {
       });
     });
 
+    it('should call updateTask and return 404 when task not found', async () => {
+      const taskId = 'notFound';
+      const task = {
+        id: taskId,
+        title: 'test',
+        description: 'test',
+      };
+
+      let result;
+      let error: any;
+
+      try {
+        result = await controller.updateTask(taskId, task);
+      } catch (err) {
+        error = err;
+      }
+
+      expect(result).toBeUndefined();
+      expect(error?.getStatus()).toBe(404);
+      expect(commandBus.execute).toHaveBeenCalledTimes(1);
+      expect(commandBus.execute).toHaveBeenCalledWith(
+        new UpdateTaskCommand(task),
+      );
+    });
+
     it('should call updateTask failure', async () => {
       const taskId = 'error';
       const task = {
@@ -221,6 +255,24 @@ describe(TaskController.name, () => {
         title: 'title',
         description: 'description',
       });
+    });
+
+    it('should call getTask and return 404 when task not found', async () => {
+      const taskId = 'notFound';
+
+      let result;
+      let error: any;
+
+      try {
+        result = await controller.getTask(taskId);
+      } catch (err) {
+        error = err;
+      }
+
+      expect(result).toBeUndefined();
+      expect(error?.getStatus()).toBe(404);
+      expect(queryBus.execute).toHaveBeenCalledTimes(1);
+      expect(queryBus.execute).toHaveBeenCalledWith(new GetTaskQuery(taskId));
     });
 
     it('should call getTask failure', async () => {
