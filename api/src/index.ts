@@ -1,4 +1,5 @@
 require('./tracing');
+import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import serverlessExpress from '@vendia/serverless-express';
 import { APIGatewayEvent, Callback, Context, Handler } from 'aws-lambda';
@@ -8,6 +9,7 @@ let server: Handler;
 
 async function bootstrap(): Promise<Handler> {
   const app = await NestFactory.create(AppModule);
+  app.useGlobalPipes(new ValidationPipe());
   await app.init();
 
   const expressApp = app.getHttpAdapter().getInstance();
