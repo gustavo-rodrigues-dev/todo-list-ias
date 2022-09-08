@@ -35,3 +35,15 @@ updates:
       - 'dependencies'
       - 'security'
       - 'api'
+  - package-ecosystem: 'npm'
+    directory: '/user'
+    schedule:
+      interval: 'daily'
+    commit-message:
+      prefix: 'chore:'
+      include: 'scope'
+    labels:
+      - 'npm'
+      - 'dependencies'
+      - 'security'
+      - 'user'

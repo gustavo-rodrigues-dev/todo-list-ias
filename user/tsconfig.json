@@ -3,9 +3,10 @@
     "target": "ES2018",
     "module": "commonjs",
     "lib": ["es2018"],
+    "rootDir": "./src",
     "outDir": "./dist",
     "declaration": true,
-    "declarationMap": true,
+    "removeComments": true,
     "strict": true,
     "noImplicitAny": true,
     "strictNullChecks": true,
@@ -19,17 +20,12 @@
     "inlineSources": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
+    "incremental": false,
+    "skipLibCheck": true,
     "allowSyntheticDefaultImports": true,
     "strictPropertyInitialization": false,
-    "skipLibCheck": true,
     "esModuleInterop": true,
     "typeRoots": ["./node_modules/@types"]
   },
-  "exclude": [
-    "node_modules",
-    "infrastructure/cdk.out",
-    "api",
-    "user",
-    "**/*.spec.ts"
-  ]
+  "exclude": ["node_modules", "**/*.spec.ts", "dist"]
 }
