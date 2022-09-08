@@ -36,7 +36,7 @@
     "remark-stringify": "10.0.2",
     "ts-node": "10.9.1",
     "tsuml2": "0.6.1",
-    "typescript": "4.8.2"
+    "typescript": "4.8.3"
   },
   "dependencies": {
     "@typescript-eslint/eslint-plugin": "5.36.2",
