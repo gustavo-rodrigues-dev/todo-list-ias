@@ -5,10 +5,10 @@
     "ias": "./dist/infrastructure/bin.js"
   },
   "scripts": {
-    "start:local": "sam local start-api  -t ./cdk.out/CdkTaStack.template.json",
+    "start:local": "sam local start-api -t ./cdk.out/CdkTaStack.template.json",
     "build": "tsc",
     "watch": "tsc -w",
-    "test": "jest",
+    "test": "jest --coverage",
     "cdk": "cdk",
     "test:debug": "node --inspect-brk ./node_modules/jest/bin/jest.js --runInBand --coverage=false"
   },

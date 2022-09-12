@@ -12,7 +12,7 @@ env:
   CODACY_PROJECT_TOKEN: ${{ secrets.CODACY_PROJECT_TOKEN }}
 
 jobs:
-  build:
+  todo:
     defaults:
       run:
         working-directory: ./api
@@ -32,5 +32,52 @@ jobs:
           cache: 'npm'
       - run: npm ci
       - run: npm test
-      - run: bash <(curl -Ls https://coverage.codacy.com/get.sh)
+      - run: bash <(curl -Ls https://coverage.codacy.com/get.sh) report --partial -l TypeScript -r ./coverage/lcov.info
       - run: npm run build
+  user:
+    needs: [todo]
+    defaults:
+      run:
+        working-directory: ./user
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [18.x]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+      - run: npm ci
+      - run: npm test
+      - run: bash <(curl -Ls https://coverage.codacy.com/get.sh) report --partial -l TypeScript -r ./coverage/lcov.info
+      - run: npm run build
+  infra:
+    needs: [todo, user]
+    defaults:
+      run:
+        working-directory: ./infrastructure
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [14.x]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+      - run: npm ci
+      - run: npm run build
+      - run: npm test
+      - run: bash <(curl -Ls https://coverage.codacy.com/get.sh) report --partial -l TypeScript -r ./coverage/lcov.info
+      - run: bash <(curl -Ls https://coverage.codacy.com/get.sh) final
