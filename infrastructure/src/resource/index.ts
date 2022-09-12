@@ -7,3 +7,4 @@ export {
   ToDoDynamoDb,
 } from './resources';
 export { S3BucketStack } from './s3';
+export { DynamoDbStack } from './dynamo-db';
