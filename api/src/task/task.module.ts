@@ -1,3 +1,5 @@
+/* eslint-disable unused-imports/no-unused-vars-ts */
+/* eslint-disable unused-imports/no-unused-imports-ts */
 import { Module, OnModuleInit } from '@nestjs/common';
 import { CqrsModule, EventBus } from '@nestjs/cqrs';
 import { EventEmitterModule } from '@nestjs/event-emitter';
