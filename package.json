@@ -15,7 +15,7 @@
     "lint:doc": "remark README.md",
     "lint:doc:fix": "remark README.md -o README.md",
     "lint:docker": "dockerlinter -f ./api/Dockerfile -e warning",
-    "doc:infra:draw": "cfn-dia a -t ./infrastructure/cdk.out/CdkTaStack.template.json -o ./doc/infra/template.drawio",
+    "doc:infra:draw": "cfn-dia d -t ./infrastructure/cdk.out/CdkTaStack.template.json -o ./doc/infra/template.drawio",
     "doc:infra:img": "drawio ./doc/infra/template.drawio -o ./doc/infra/template.png",
     "doc:api:img": "tsuml2 --glob \"./api/src/**/!(*.d|*.spec).ts\" --tsconfig \"./api/tsconfig.json\" --typeLinks -m -o ./doc/api/diagram.svg"
   },
