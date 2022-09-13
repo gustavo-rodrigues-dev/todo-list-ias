@@ -1,3 +1,5 @@
+/* eslint-disable unused-imports/no-unused-vars-ts */
+/* eslint-disable unused-imports/no-unused-imports-ts */
 import { DynamooseModule } from 'nestjs-dynamoose';
 import { Module } from '@nestjs/common';
 import { DynamoDB } from '@aws-sdk/client-dynamodb';
