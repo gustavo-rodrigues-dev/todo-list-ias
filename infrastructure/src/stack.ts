@@ -13,6 +13,8 @@ import {
   ApiFunctionStack,
   DynamoDbStack,
 } from './resource';
+import { ApiUserFargate } from './resource/api-user-fargate';
+import { VpcStack } from './resource/vpc';
 // import * as sqs from 'aws-cdk-lib/aws-sqs';
 
 export class Stack extends CDKStack implements StackResource {
@@ -22,8 +24,9 @@ export class Stack extends CDKStack implements StackResource {
     super(scope, id, props);
     const self = this;
     Tags.of(scope).add('project', 'to-do-stack');
-
+    new VpcStack(self);
     new S3BucketStack(self);
+    new ApiUserFargate(self);
     new DynamoDbStack(self);
     new ApiFunctionStack(self);
     this.outPuts.set(ToDoStack, [
