@@ -116,7 +116,7 @@ module.exports = {
     'object-shorthand': 'error',
     'one-var': ['error', 'never'],
     '@typescript-eslint/no-unused-vars': 'off',
-    'unused-imports/no-unused-imports-ts': 'error',
+    'unused-imports/no-unused-imports-ts': ['error'],
     'unused-imports/no-unused-vars-ts': [
       'error',
       {
