@@ -50,7 +50,7 @@
     "dynamoose": "3.1.0",
     "nestjs-dynamoose": "0.5.0",
     "reflect-metadata": "0.1.13",
-    "rxjs": "7.5.6",
+    "rxjs": "7.5.7",
     "uuid": "^9.0.0"
   },
   "overrides": {
