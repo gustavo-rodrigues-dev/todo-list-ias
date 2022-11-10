@@ -27,7 +27,7 @@
     "@types/node": "16.18.3",
     "dockerlinter": "1.2.2",
     "draw.io-export": "0.2.0",
-    "husky": "8.0.1",
+    "husky": "8.0.2",
     "remark": "14.0.2",
     "remark-cli": "11.0.0",
     "remark-lint-list-item-indent": "3.1.1",
