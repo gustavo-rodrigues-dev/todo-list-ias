@@ -23,7 +23,7 @@
     "@commitlint/cli": "17.2.0",
     "@commitlint/config-angular": "17.2.0",
     "@commitlint/config-conventional": "17.2.0",
-    "@mhlabs/cfn-diagram": "1.1.36",
+    "@mhlabs/cfn-diagram": "1.1.38",
     "@types/node": "18.11.9",
     "dockerlinter": "1.2.2",
     "draw.io-export": "0.2.0",
