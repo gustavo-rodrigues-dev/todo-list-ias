@@ -16,7 +16,7 @@
     "@nestjs/schematics": "9.0.3",
     "@nestjs/testing": "9.1.6",
     "@types/aws-lambda": "8.10.137",
-    "@types/aws-serverless-express": "3.3.8",
+    "@types/aws-serverless-express": "3.3.9",
     "@types/jest": "29.2.2",
     "@types/node": "18.11.9",
     "@types/supertest": "2.0.16",
