@@ -34,7 +34,7 @@
     "remark-preset-lint-consistent": "5.1.1",
     "remark-preset-lint-recommended": "6.1.2",
     "remark-stringify": "10.0.2",
-    "ts-node": "10.9.1",
+    "ts-node": "10.9.2",
     "tsuml2": "0.6.1",
     "typescript": "4.8.4"
   },
