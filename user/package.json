@@ -55,7 +55,7 @@
     "uuid": "^9.0.0"
   },
   "overrides": {
-    "minimist": "1.2.7",
+    "minimist": "1.2.8",
     "terser": "5.15.0"
   },
   "@nestjs/cli@8.2.4": {
