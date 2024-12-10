@@ -20,9 +20,9 @@
     "doc:api:img": "tsuml2 --glob \"./api/src/**/!(*.d|*.spec).ts\" --tsconfig \"./api/tsconfig.json\" --typeLinks -m -o ./doc/api/diagram.svg"
   },
   "devDependencies": {
-    "@commitlint/cli": "17.2.0",
-    "@commitlint/config-angular": "17.2.0",
-    "@commitlint/config-conventional": "17.2.0",
+    "@commitlint/cli": "17.8.1",
+    "@commitlint/config-angular": "17.8.1",
+    "@commitlint/config-conventional": "17.8.1",
     "@mhlabs/cfn-diagram": "1.1.40",
     "@types/node": "18.11.9",
     "dockerlinter": "1.2.2",
