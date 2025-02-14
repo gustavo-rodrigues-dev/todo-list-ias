@@ -1,4 +1,4 @@
-FROM node:18 AS build-env
+FROM node:22 AS build-env
 RUN npm config --global set update-notifier false
 RUN mkdir -p app/ 
 
